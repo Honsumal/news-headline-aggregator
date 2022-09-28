@@ -11,4 +11,5 @@ Search Bar
 
 APIs to be used:
 - StatCan
+- Google News Search
 
