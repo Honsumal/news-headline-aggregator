@@ -27,6 +27,7 @@
     type="stylesheet" 
     href="./assets/css/style.css"
   >
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <title>News Aggregator</title>
 </head>
 <body>
@@ -52,7 +53,7 @@
   
   <nav>
     <div class="nav-wrapper">
-      <form>
+      <form id = "searchForm">
         <div class="input-field">
           <input id="search" type="search" required placeholder="Search">
           <i class="material-icons">X</i>
@@ -67,7 +68,6 @@
     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus modi quasi debitis incidunt vero cupiditate placeat repudiandae iste consectetur iure! Alias odit error placeat vel repellendus impedit consequatur blanditiis molestiae?</p> <a>read more</a>
   </section>
 
-  <script src="./assets/js/script.js"></script>
   <script 
     src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js">
   </script>
@@ -82,5 +82,6 @@
   <script 
     src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js">
   </script>
+  <script src="./assets/js/script.js"></script>
 </body>
 </html>
