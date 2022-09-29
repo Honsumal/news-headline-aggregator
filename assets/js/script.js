@@ -2,6 +2,7 @@ let apiKey = "c0727ad6f00544e28f79127521a31139"
 
 let regionsStatsCan_En = []; // English regions array
 let themesStatsCan_En = []; // English themes array
+let searchquery;
 
 let theme = {
         theme_id: 0,
@@ -11,6 +12,17 @@ let theme = {
 
 extractStatsCanThemes("housing");
 fetchStatsCanHeadlines("money");
+
+let search = $("#searchForm");
+
+function thingy(e) {
+    e.preventDefault();
+    searchquery = $("#search").val();
+}
+
+search.on("submit", thingy)
+
+
 
 // function takes in the themes string from payload and extracts and returns comma delimitted  theme labels
 function extractStatsCanThemes(str) {
