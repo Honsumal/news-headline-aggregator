@@ -6,6 +6,10 @@ let theme = {
         label: ""
 };
 
+
+extractStatsCanThemes("housing");
+fetchStatsCanHeadlines("money");
+
 // function takes in the themes string from payload and extracts and returns comma delimitted  theme labels
 function extractStatsCanThemes(str) {
     let themeStr = str;
@@ -49,6 +53,7 @@ function fetchStatsCanHeadlines() {
                 $('#articles-list').children('h1').append($('<br/>'));
                 for (let i=0;i<data.results.indicators.length;i++) {
                     var linkEl = $('<a>');
+                    linkEl.attr("target","_blank") // Open link in new tab
                     let title = data.results.indicators[i].daily_title.en + '::'+data.results.indicators[i].title.en + '::' + regionsStatsCan_En[data.results.indicators[i].geo_code]; 
                     let themeTags = data.results.indicators[i].themes.split('**');
                     title = title + '---> THEMES: '+extractStatsCanThemes(themeTags);
@@ -62,26 +67,26 @@ function fetchStatsCanHeadlines() {
               .catch(console.error)
 }
 
-function getNews (query, date) {
+// function getNews (query, date) {
 
-    $.ajax({
-        url: "https://newsapi.org/v2/everything?q=" + query + 
-        "&from=" + date + 
-        // "&domains=" + domains + 
-        "&sortBy=popularity&apiKey=" + apiKey, // Can add option for sorting
-        method: 'GET',
-        error: function(request, status, error) {
-            alert("error"); // Make this a modal
-        }
-        }).then(function (response) {
+//     $.ajax({
+//         url: "https://newsapi.org/v2/everything?q=" + query + 
+//         "&from=" + date + 
+//         // "&domains=" + domains + 
+//         "&sortBy=popularity&apiKey=" + apiKey, // Can add option for sorting
+//         method: 'GET',
+//         error: function(request, status, error) {
+//             alert("error"); // Make this a modal
+//         }
+//         }).then(function (response) {
 
-        console.log(response.articles[0].title) // May want to truncate this
-        console.log(response.articles[0].description)
-        console.log(response.articles[0].source.name)
+//         console.log(response.articles[0].title) // May want to truncate this
+//         console.log(response.articles[0].description)
+//         console.log(response.articles[0].source.name)
 
-    })
+//     })
 
-}
+// }
 
-getNews("Financial Market","2022-09-28")
+// getNews("Financial Market","2022-09-28")
 
