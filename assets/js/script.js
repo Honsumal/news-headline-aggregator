@@ -69,7 +69,7 @@ function fetchStatsCanHeadlines() {
               .catch(console.error)
 }
 
-// function getNews (query, date) {
+ function getNews (query, date) {
      let url = "https://newsapi.org/v2/everything?q=" + query + 
         "&from=" + date + 
         // "&domains=" + domains + 
@@ -84,10 +84,8 @@ function fetchStatsCanHeadlines() {
             console.log(data.articles[0].title) // May want to truncate this
             console.log(data.articles[0].description)
             console.log(data.articles[0].source.name)
+     })
 
-//     })
+}
 
-// }
-
-// getNews("Financial Market","2022-09-28")
-
+getNews("Financial Market","2022-09-28")
