@@ -8,6 +8,10 @@ let theme = {
         label: ""
 };
 
+
+extractStatsCanThemes("housing");
+fetchStatsCanHeadlines("money");
+
 // function takes in the themes string from payload and extracts and returns comma delimitted  theme labels
 function extractStatsCanThemes(str) {
     let themeStr = str;
@@ -51,6 +55,7 @@ function fetchStatsCanHeadlines() {
                 $('#articles-list').children('h1').append($('<br/>'));
                 for (let i=0;i<data.results.indicators.length;i++) {
                     var linkEl = $('<a>');
+                    linkEl.attr("target","_blank") // Open link in new tab
                     let title = data.results.indicators[i].daily_title.en + '::'+data.results.indicators[i].title.en + '::' + regionsStatsCan_En[data.results.indicators[i].geo_code]; 
                     let themeTags = data.results.indicators[i].themes.split('**');
                     title = title + '---> THEMES: '+extractStatsCanThemes(themeTags);
@@ -64,7 +69,8 @@ function fetchStatsCanHeadlines() {
               .catch(console.error)
 }
 
-function getNews (query, date) {
+// function getNews (query, date) {
+
 
      let url = "https://newsapi.org/v2/everything?q=" + query + 
         "&from=" + date + 
@@ -81,9 +87,10 @@ function getNews (query, date) {
             console.log(data.articles[0].description)
             console.log(data.articles[0].source.name)
 
-    })
 
-}
+//     })
 
-getNews("Financial Market","2022-09-28")
+// }
+
+// getNews("Financial Market","2022-09-28")
 
