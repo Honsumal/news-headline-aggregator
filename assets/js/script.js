@@ -81,23 +81,50 @@ function fetchStatsCanHeadlines() {
               .catch(console.error)
 }
 
- function getNews (query, date) {
-     let url = "http://newsapi.org/v2/everything?q=" + query + 
-        "&from=" + date + 
-        // "&domains=" + domains + 
-        "&sortBy=popularity&apiKey=" + apiKey // Can add option for sorting
+// function getNews (query, date) {
 
-    fetch(new Request(url))
-        .then((response) => response.json())
-        .then(function (data) {
+//     let url = "https://newsapi.org/v2/everything?q=" + query + 
+//        "&from=" + date + 
+//        // "&domains=" + domains + 
+//        "&sortBy=popularity&apiKey=" + apiKey // Can add option for sorting
 
+//    fetch(new Request(url))
+//        .then((response) => response.json())
+//        .then(function (data) {
+
+//            console.log(data)
+
+//            console.log(data.articles[0].title) // May want to truncate this
+//            console.log(data.articles[0].description)
+//            console.log(data.articles[0].source.name)
+
+//    })
+
+// }
+
+// getNews("Financial Market","2022-09-28")
+
+function getNews(query) {
+
+    let options = {
+        method: 'GET',
+        headers: {
+            'X-RapidAPI-Key': 'b8835ac7f4msh09512c251bb8c50p1f9a63jsnfcf8c28c6887',
+            'X-RapidAPI-Host': 'free-news.p.rapidapi.com'
+        }
+    };
+
+    fetch('https://free-news.p.rapidapi.com/v1/search?q=' + query + '&lang=en', options)
+        .then(response => response.json())
+        .then(function(data){
             console.log(data)
-
-            console.log(data.articles[0].title) // May want to truncate this
-            console.log(data.articles[0].description)
-            console.log(data.articles[0].source.name)
-     })
-
+            console.log(data.articles[0].title)
+            console.log(data.articles[0].summary)
+            console.log(data.articles[0].clean_url)
+            console.log(data.articles[0].link)
+        })
+        .catch(err => console.error(err));
 }
 
-getNews("Financial Market","2022-09-28")
+getNews('china economy')
+
