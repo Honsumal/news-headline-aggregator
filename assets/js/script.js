@@ -82,7 +82,7 @@ function fetchStatsCanHeadlines() {
 }
 
  function getNews (query, date) {
-     let url = "https://newsapi.org/v2/everything?q=" + query + 
+     let url = "http://newsapi.org/v2/everything?q=" + query + 
         "&from=" + date + 
         // "&domains=" + domains + 
         "&sortBy=popularity&apiKey=" + apiKey // Can add option for sorting
