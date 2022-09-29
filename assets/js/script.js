@@ -1,3 +1,5 @@
+let apiKey = "c0727ad6f00544e28f79127521a31139"
+
 let regionsStatsCan_En = []; // English regions array
 let themesStatsCan_En = []; // English themes array
 
@@ -64,20 +66,20 @@ function fetchStatsCanHeadlines() {
 
 function getNews (query, date) {
 
-    $.ajax({
-        url: "https://newsapi.org/v2/everything?q=" + query + 
+     let url = "https://newsapi.org/v2/everything?q=" + query + 
         "&from=" + date + 
         // "&domains=" + domains + 
-        "&sortBy=popularity&apiKey=" + apiKey, // Can add option for sorting
-        method: 'GET',
-        error: function(request, status, error) {
-            alert("error"); // Make this a modal
-        }
-        }).then(function (response) {
+        "&sortBy=popularity&apiKey=" + apiKey // Can add option for sorting
 
-        console.log(response.articles[0].title) // May want to truncate this
-        console.log(response.articles[0].description)
-        console.log(response.articles[0].source.name)
+    fetch(new Request(url))
+        .then((response) => response.json())
+        .then(function (data) {
+
+            console.log(data)
+
+            console.log(data.articles[0].title) // May want to truncate this
+            console.log(data.articles[0].description)
+            console.log(data.articles[0].source.name)
 
     })
 
