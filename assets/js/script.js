@@ -70,8 +70,6 @@ function fetchStatsCanHeadlines() {
 }
 
 // function getNews (query, date) {
-
-<<<<<<< HEAD
      let url = "https://newsapi.org/v2/everything?q=" + query + 
         "&from=" + date + 
         // "&domains=" + domains + 
@@ -86,22 +84,6 @@ function fetchStatsCanHeadlines() {
             console.log(data.articles[0].title) // May want to truncate this
             console.log(data.articles[0].description)
             console.log(data.articles[0].source.name)
-=======
-//     $.ajax({
-//         url: "https://newsapi.org/v2/everything?q=" + query + 
-//         "&from=" + date + 
-//         // "&domains=" + domains + 
-//         "&sortBy=popularity&apiKey=" + apiKey, // Can add option for sorting
-//         method: 'GET',
-//         error: function(request, status, error) {
-//             alert("error"); // Make this a modal
-//         }
-//         }).then(function (response) {
-
-//         console.log(response.articles[0].title) // May want to truncate this
-//         console.log(response.articles[0].description)
-//         console.log(response.articles[0].source.name)
->>>>>>> b99875da4efab2c6fedf97d26317064c55c87196
 
 //     })
 
