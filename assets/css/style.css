@@ -5,3 +5,8 @@ section {
 section h1 {
   text-align: center;
 }
+
+h1 {
+  text-decoration: none;
+  color:black
+}
