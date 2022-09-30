@@ -27,10 +27,11 @@
     type="stylesheet" 
     href="./assets/css/style.css"
   >
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <title>News Aggregator</title>
 </head>
-<body>
-  
+<body class = "amber lighten-5">
+
   <nav class="navbar navbar-expand-lg bg-muted">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">Navbar</a>
@@ -48,11 +49,8 @@
         </ul>
       </div>
     </div>
-  </nav>
-  
-  <nav>
     <div class="nav-wrapper">
-      <form>
+      <form id = "searchForm">
         <div class="input-field">
           <input id="search" type="search" required placeholder="Search">
           <i class="material-icons">X</i>
@@ -61,20 +59,51 @@
     </div>
   </nav>
 
-  <section id="articles-list">
-    <h1>Title</h1>
-    <h2>Source</h2>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus modi quasi debitis incidunt vero cupiditate placeat repudiandae iste consectetur iure! Alias odit error placeat vel repellendus impedit consequatur blanditiis molestiae?</p> <a>read more</a>
+  <div class = "" id = "sidenav">
+
+  </div>
+
+  <section  class = "container" id="articles-list">
+    <div class = "card p-2 border row">
+      <div class = "card-content">
+        <h1 class="card-title">Title</h1>
+        <h4>Source</h4>
+        <p class= "">Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus modi quasi debitis incidunt vero cupiditate placeat repudiandae iste consectetur iure! Alias odit error placeat vel repellendus impedit consequatur blanditiis molestiae?</p> <a>read more</a>
+      </div>
+    </div>
+
+    <div class = "card p-2 border row">
+      <div class = "card-content">
+        <h1 class="card-title">Title</h1>
+        <h4>Source</h4>
+        <p class= "">Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus modi quasi debitis incidunt vero cupiditate placeat repudiandae iste consectetur iure! Alias odit error placeat vel repellendus impedit consequatur blanditiis molestiae?</p> <a>read more</a>
+      </div>
+    </div>
+
+    <div class = "card p-2 border row">
+      <div class = "card-content">
+        <h1 class="card-title">Title</h1>
+        <h4>Source</h4>
+        <p class= "">Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus modi quasi debitis incidunt vero cupiditate placeat repudiandae iste consectetur iure! Alias odit error placeat vel repellendus impedit consequatur blanditiis molestiae?</p> <a>read more</a>
+      </div>
+    </div>
+
+    <div class = "card p-2 border row">
+      <div class = "card-content">
+        <h1 class="card-title">Title</h1>
+        <h4>Source</h4>
+        <p class= "">Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus modi quasi debitis incidunt vero cupiditate placeat repudiandae iste consectetur iure! Alias odit error placeat vel repellendus impedit consequatur blanditiis molestiae?</p> <a>read more</a>
+      </div>
+    </div>
+
+
   </section>
 
-  <script src="./assets/js/script.js"></script>
   <script 
     src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js">
   </script>
   <script 
-    src="https://code.jquery.com/jquery-3.5.1.slim.min.js" 
-    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" 
-    crossorigin="anonymous">
+    src="https://code.jquery.com/jquery-1.12.4.js">
   </script>
   <script 
     src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" 
@@ -84,5 +113,6 @@
   <script 
     src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js">
   </script>
+  <script src="./assets/js/script.js"></script>
 </body>
 </html>
