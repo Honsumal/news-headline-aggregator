@@ -1,7 +1,17 @@
-section {
-  align-items: center;
+.card-title {
+  font-weight: bolder;
 }
 
-section h1 {
-  text-align: center;
+h4 {
+  font-weight: normal;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+h1 {
+  text-decoration: none;
+  color:black
 }

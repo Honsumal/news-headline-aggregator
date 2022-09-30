@@ -1,13 +1,27 @@
-
+let apiKey = "c0727ad6f00544e28f79127521a31139"
 
 let regionsStatsCan_En = []; // English regions array
 let themesStatsCan_En = []; // English themes array
+
 
 
 let theme = {
         theme_id: 0,
         label: ""
 };
+
+
+extractStatsCanThemes("housing");
+fetchStatsCanHeadlines("money");
+
+let search = $("#searchForm");
+
+function thingy(e) {
+    e.preventDefault();
+    searchquery = $("#search").val();
+}
+
+search.on("submit", thingy)
 
 
 
@@ -208,5 +222,11 @@ function displayStatsCanHeadlines(geo,theme,data) {
    }
 }
 
+$(document).ready(function(){
+    $('select').formSelect();
+  });
 
-fetchStatsCanHeadlines();
+$(document).ready(function(){
+// the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+$('.modal-trigger').modal();
+});
