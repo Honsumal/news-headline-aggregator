@@ -18,6 +18,7 @@ let search = $("#searchForm");
 function thingy(e) {
     e.preventDefault();
     searchquery = $("#search").val();
+    console.log(searchquery)
 }
 
 search.on("submit", thingy)
@@ -81,35 +82,15 @@ function fetchStatsCanHeadlines() {
               .catch(console.error)
 }
 
-// function getNews (query, date) {
-
-//     let url = "https://newsapi.org/v2/everything?q=" + query + 
-//        "&from=" + date + 
-//        // "&domains=" + domains + 
-//        "&sortBy=popularity&apiKey=" + apiKey // Can add option for sorting
-
-//    fetch(new Request(url))
-//        .then((response) => response.json())
-//        .then(function (data) {
-
-//            console.log(data)
-
-//            console.log(data.articles[0].title) // May want to truncate this
-//            console.log(data.articles[0].description)
-//            console.log(data.articles[0].source.name)
-
-//    })
-
-// }
-
-// getNews("Financial Market","2022-09-28")
-
 function getNews(query) {
+
+    let key = 'b8835ac7f4msh09512c251bb8c50p1f9a63jsnfcf8c28c6887';
+    let key2 = "63b5f3f813msh71c6a2292902599p1791acjsnaa181db5e420";
 
     let options = {
         method: 'GET',
         headers: {
-            'X-RapidAPI-Key': 'b8835ac7f4msh09512c251bb8c50p1f9a63jsnfcf8c28c6887',
+            'X-RapidAPI-Key': key,
             'X-RapidAPI-Host': 'free-news.p.rapidapi.com'
         }
     };
@@ -123,8 +104,16 @@ function getNews(query) {
             console.log(data.articles[0].clean_url)
             console.log(data.articles[0].link)
         })
-        .catch(err => console.error(err));
+        .catch(err => console.error(err))
 }
 
-getNews('china economy')
+// getNews('china economy')
 
+$(document).ready(function(){
+    $('select').formSelect();
+  });
+
+$(document).ready(function(){
+// the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+$('.modal-trigger').modal();
+});
