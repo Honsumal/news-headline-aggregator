@@ -46,21 +46,32 @@
           <li class="nav-item">
             <a class="nav-link" href="#">Link</a>
           </li>
+          <li class="nav-item">
+            <a class=" nav-link modal-trigger" href="#aSearch">Advanced Search</a> <!-- Make Modal -->
+          </li>
         </ul>
       </div>
     </div>
     <div class="nav-wrapper">
       <form id = "searchForm">
-        <div class="input-field">
-          <input id="search" type="search" required placeholder="Search">
+
+          <div class="input-field row">
+          <input class = "col-4" id="search" type="search" required placeholder="Search">
           <i class="material-icons">X</i>
-        </div>
+          </div>
+
       </form>
     </div>
   </nav>
 
-  <div class = "" id = "sidenav">
-
+  <div id="aSearch" class="modal">
+    <div class="modal-content">
+      <h4>Modal Header</h4>
+      <p>A bunch of text</p>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+    </div>
   </div>
 
   <section  class = "container" id="articles-list"></section>
