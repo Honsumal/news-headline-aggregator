@@ -4,6 +4,7 @@ let regionsStatsCan_En = []; // English regions array
 let themesStatsCan_En = []; // English themes array
 let searchquery;
 
+
 let theme = {
         theme_id: 0,
         label: ""
@@ -103,8 +104,46 @@ function getNews(query) {
             console.log(data.articles[0].summary)
             console.log(data.articles[0].clean_url)
             console.log(data.articles[0].link)
+            displayNews(data);
         })
-        .catch(err => console.error(err))
+        
+}
+
+function displayNews(APInews) {
+    let newsList = $("#articles-list");
+    for (i=0;i<APInews.articles.length;i++) {
+        // Outer shell
+        let newsOuterContainer = document.createElement("div");
+        newsOuterContainer.classList.add("card", "p-2", "border", "row");
+        // Inner Shell
+        let newsBody = document.createElement("div");
+        newsBody.classList.add("card-content");
+        //Headline
+        let headline = document.createElement("a");
+        headline.classList.add("headline-link"); // Styling for headline links
+        headline.setAttribute("href",APInews.articles[i].link);
+        let headlineText = document.createElement("h1");
+        headlineText.textContent=(APInews.articles[i].title);
+        headline.append(headlineText);
+        newsBody.append(headline);
+        //Source
+        let source = document.createElement("h4");
+        source.classList.add("card-title");
+        source.textContent = (APInews.articles[i].clean_url);
+        newsBody.append(source);
+        //Text
+        let textPreview = document.createElement("p");
+        textPreview.textContent = (APInews.articles[i].summary);
+        newsBody.append(textPreview);
+        //Readmore
+        let readMore = document.createElement("a");
+        readMore.textContent = ("Read more here!");
+        readMore.setAttribute("href",APInews.articles[i].link);
+        newsBody.append(readMore)
+        // Add element to news headlines
+        newsOuterContainer.append(newsBody);
+        newsList.append(newsOuterContainer);
+    }
 }
 
 // getNews('china economy')
