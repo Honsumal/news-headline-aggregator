@@ -1,5 +1,6 @@
 let regionsStatsCan_En = []; // English regions array
 let themesStatsCan_En = []; // English themes array
+let indicators_en = [];
 let searchquery;
 
 
@@ -9,8 +10,12 @@ let theme = {
 };
 
 
-// extractStatsCanThemes("housing");
-// fetchStatsCanHeadlines("money");
+
+
+
+extractStatsCanThemes("housing");
+fetchStatsCanHeadlines("money");
+
 
 let search = $("#searchForm");
 
@@ -62,7 +67,10 @@ function fetchStatsCanHeadlines() {
                 }
                 themesStatsCan_En=data.results.themes_en; // extract the themes array 
 
-                displayStatsCanHeadlines(['Canada'],'',data);
+                console.log(data);
+                parseStatsCanIndicators(data);
+                filterStatsCanIndicators(['Ontario','Canada'],['Earnings']);
+                // displayStatsCanHeadlines();
 
               })
               .catch(console.error)
@@ -139,11 +147,73 @@ $('#aSearchButton').on('click', function(event){
         theme: $('#theme').val()
     };
 
-    console.log(query)
-})
+function parseStatsCanIndicators(data) {
+    let indicators = data.results.indicators;
+
+    indicators.forEach(element => {
+
+        let indicator = {
+            category: "",
+            title: "",
+            region:"",
+            date:"",
+            period:"",
+            amount:"",
+            rate:"",
+            arrow:"",
+            dailyUrl:"",
+            sourceID:"",
+            themes: []
+    }; 
+    
+        indicator.category=element.daily_title.en;
+        indicator.title=element.title.en;
+        indicator.region=regionsStatsCan_En[element.geo_code];
+        indicator.date=element.refper.en;
+        indicator.amount=element.value.en;
+        indicator.dailyUrl='https://www.statcan.gc.ca/'+element.daily_url.en;
+        indicator.sourceID=element.source;
+        indicator.themes=extractStatsCanThemes(element.themes);
+        if (element.growth_rate!=null) {
+            indicator.period=element.growth_rate.details.en;
+            indicator.rate=element.growth_rate.growth.en;
+            if (element.growth_rate.arrow_direction==1) 
+            {
+                indicator.arrow='⬆';
+            } else {
+                indicator.arrow='⬇';
+            }
+            
+        }
+        indicators_en.push(indicator);
+    });
+
+    console.log(indicators_en);
+
+}
+
+function filterStatsCanIndicators(region,theme) {
+    
+    let filteredArr =[];
+
+    console.log(filteredArr);
+    
+    indicators_en.forEach((element,index,arr) => {
+        
+
+        if (element.region===region && element.themes.includes(theme))
+            {   
+                filteredArr.push(element);
+            }
+       
+            
+    });
+    
+    console.log(filteredArr);
+}
 
 // displays the StatsCan information based on input region/theme criteria to be obtained form user search UI at top of page
-function displayStatsCanHeadlines(geo,theme,data) {
+function displayStatsCanHeadlines() {
 
     let thisTitle="";
     let prevTitle="";
@@ -214,8 +284,7 @@ function displayStatsCanHeadlines(geo,theme,data) {
 
         // // for each new object I want to check whether we are at the start of a new rubric.  If we are at start of new rubric THEN terminate the previous item list (if any), THEN display the rubric name AND display the first report title in the rubric as a first list item. If it's a subsequent rubric name appearance then ONLY append the new report title to the previous item list.
 
-
-        if (i==0) {
+        if (i===0) {
             prevTitle="";
         } else {
             prevTitle = indicators[i-1].daily_title.en;
@@ -230,69 +299,201 @@ function displayStatsCanHeadlines(geo,theme,data) {
         }
 
         if (sameRubric) {
-            var linkEl = $('<a>');
-            let title = indicators[i].title.en + '::' + regionsStatsCan_En[indicators[i].geo_code]; 
-            title = title + ', ' + indicators[i].refper.en;
-            title = title + ', ' + indicators[i].value.en;
-            if (indicators[i].growth_rate!=null) {
-                title = title + ', ' + indicators[i].growth_rate.growth.en;
-                if (indicators[i].growth_rate.arrow_direction==1) {
-                    title = title + ' ⬆ ';
-                } else {
-                    title = title + ' ⬇ ';
-                }
-                title = title + ', ' + indicators[i].growth_rate.details.en;
-            }
-            title = title + ' ['+extractStatsCanThemes(indicators[i].themes)+']';
-            linkEl.text(title);
-            linkEl.attr('href','https://www.statcan.gc.ca/'+indicators[i].daily_url.en);
-            linkEl.attr('style','font-size: 1rem;');
-            listEl.append(linkEl);
-            listEl.append('<br/>');
+
+            // var linkEl = $('<a>');
+            // let title = indicators[i].title.en + '::' + regionsStatsCan_En[indicators[i].geo_code]; 
+            // title = title + ', ' + indicators[i].refper.en;
+            // title = title + ', ' + indicators[i].value.en;
+            // if (indicators[i].growth_rate!=null) {
+            //     title = title + ', ' + indicators[i].growth_rate.growth.en;
+            //     if (indicators[i].growth_rate.arrow_direction==1) {
+            //         title = title + ' ⬆ ';
+            //     } else {
+            //         title = title + ' ⬇ ';
+            //     }
+            //     title = title + ', ' + indicators[i].growth_rate.details.en;
+            // }
+            // title = title + ' ['+extractStatsCanThemes(indicators[i].themes)+']';
+            // linkEl.text(title);
+            // linkEl.attr('href','https://www.statcan.gc.ca/'+indicators[i].daily_url.en);
+            // linkEl.attr('style','font-size: 1rem;');
+            // listEl.append(linkEl);
+            // listEl.append('<br/>');
+
+            var $rowDiv = $("<div>")   // creates a div element
+            // .attr("id", "someID")  // adds the id
+            .addClass("row");   // add a class
+            // .html("<div>stuff here</div>");
+
+            divEl.append($rowDiv);  
+
+            var $colDiv = $("<div>")   // creates a div element
+            // .attr("id", "someID")  // adds the id
+            .addClass("col s12 m6");  // add a class
+            // .html("<div>stuff here</div>");
+
+            $rowDiv.append($colDiv);
+
+            var $cardDiv = $("<div>")   // creates a div element
+            // .attr("id", "someID")  // adds the id
+            .addClass("card blue-grey darken-1");   // add a class
+            // .html("<div>stuff here</div>");
+
+            $colDiv.append($cardDiv);
+
+             var $card_ContentdDiv = $("<div>")   // creates a div element
+            // .attr("id", "someID")  // adds the id
+            .addClass("card-content white-text");   // add a class
+            // .html("<div>stuff here</div>");
+
+            $cardDiv.append($card_ContentdDiv);
+
+            var $card_titleDiv = $("<span>/")   // creates a div element
+            // .attr("id", "someID")  // adds the id
+            .addClass("card-title");   // add a class
+            // .html("<div>stuff here</div>");
+            $card_ContentdDiv.append($card_titleDiv);
+            $card_titleDiv.text(indicators[i].title.en);
+
+            $card_ContentdDiv.html('<p>'+regionsStatsCan_En[indicators[i].geo_code]+'</p><br/><p>'+regionsStatsCan_En[indicators[i].geo_code]+'</p><br/><p>'+indicators[i].refper.en+'</p><br/>'
+
+            );
+            
+            
+            $card_ContentdDiv.append($rowDiv);
+
+
         } else {
 
             if (i===0) {
-                var headingEl = $('<h1>');
-                headingEl.text(thisTitle);
-                divEl.append(headingEl);
-                divEl.append('<br/>');
-                var listEl = $('<ul>');
-                divEl.append(listEl);
+                var $rowDiv = $("<div>")   // creates a div element
+                // .attr("id", "someID")  // adds the id
+                .addClass("row");   // add a class
+                // .html("<div>stuff here</div>");
+
+                divEl.append($rowDiv);  
+
+                var $colDiv = $("<div>")   // creates a div element
+                // .attr("id", "someID")  // adds the id
+                .addClass("col s12 m6");  // add a class
+                // .html("<div>stuff here</div>");
+
+                $rowDiv.append($colDiv);
+
+                var $cardDiv = $("<div>")   // creates a div element
+                // .attr("id", "someID")  // adds the id
+                .addClass("card blue-grey darken-1");   // add a class
+                // .html("<div>stuff here</div>");
+
+                $colDiv.append($cardDiv);
+
+                 var $card_ContentdDiv = $("<div>")   // creates a div element
+                // .attr("id", "someID")  // adds the id
+                .addClass("card-content white-text");   // add a class
+                // .html("<div>stuff here</div>");
+
+                $cardDiv.append($card_ContentdDiv);
+
+                var $card_titleDiv = $("<span>/")   // creates a div element
+                // .attr("id", "someID")  // adds the id
+                .addClass("card-title");   // add a class
+                // .html("<div>stuff here</div>");
+                $card_ContentdDiv.append($card_titleDiv);
+                $card_titleDiv.text(thisTitle);
+                
+                // listEl = $("<ul>");
+                // $card_ContentdDiv.append(listEl);
+
             } else {
-                divEl.append(listEl);
-                var divEl = $('<div>');
-                var headingEl = $('<h1>');
-                headingEl.text(thisTitle);
-                divEl.append(headingEl);
-                divEl.append('<br/>');
-                var listEl = $('<ul>');
-                divEl.append(listEl);
+                
+                divEl.append($rowDiv);
+
+                var $rowDiv = $("<div>")   // creates a div element
+                // .attr("id", "someID")  // adds the id
+                .addClass("row");   // add a class
+                // .html("<div>stuff here</div>");
+
+                divEl.append($rowDiv);  
+
+                var $colDiv = $("<div>")   // creates a div element
+                // .attr("id", "someID")  // adds the id
+                .addClass("col s12 m6");  // add a class
+                // .html("<div>stuff here</div>");
+
+                $rowDiv.append($colDiv);
+
+                var $cardDiv = $("<div>")   // creates a div element
+                // .attr("id", "someID")  // adds the id
+                .addClass("card blue-grey darken-1");   // add a class
+                // .html("<div>stuff here</div>");
+
+                $colDiv.append($cardDiv);
+
+                 var $card_ContentdDiv = $("<div>")   // creates a div element
+                // .attr("id", "someID")  // adds the id
+                .addClass("card-content white-text");   // add a class
+                // .html("<div>stuff here</div>");
+
+                $cardDiv.append($card_ContentdDiv);
+
+                var $card_titleDiv = $("<span>/")   // creates a div element
+                // .attr("id", "someID")  // adds the id
+                .addClass("card-title");   // add a class
+                // .html("<div>stuff here</div>");
+                $card_ContentdDiv.append($card_titleDiv);
+                $card_titleDiv.text(thisTitle);
+                
+                // listEl = $("<ul>");
+                // $card_ContentdDiv.append(listEl);
             }
 
-            var linkEl = $('<a>');
-            let title = indicators[i].title.en + '::' + regionsStatsCan_En[indicators[i].geo_code]; 
-            title = title + ', ' + indicators[i].refper.en;
-            title = title + ', ' + indicators[i].value.en;
-            if (indicators[i].growth_rate!=null) {
-                title = title + ', ' + indicators[i].growth_rate.growth.en;
-                if (indicators[i].growth_rate.arrow_direction==1) {
-                    title = title + ' ⬆ ';
-                } else {
-                    title = title + ' ⬇ ';
-                }
-                title = title + ', ' + indicators[i].growth_rate.details.en;
-            }
-            title = title + ' ['+extractStatsCanThemes(data.results.indicators[i].themes)+']';
-            linkEl.text(title);
-            linkEl.attr('href','https://www.statcan.gc.ca/'+indicators[i].daily_url.en);
-            linkEl.attr('style','font-size: 1rem;');
-            listEl.append(linkEl);
-            listEl.append('<br/>');
+            
+            var $rowDiv = $("<div>")   // creates a div element
+            // .attr("id", "someID")  // adds the id
+            .addClass("row");   // add a class
+            // .html("<div>stuff here</div>");
+
+            divEl.append($rowDiv);  
+
+            var $colDiv = $("<div>")   // creates a div element
+            // .attr("id", "someID")  // adds the id
+            .addClass("col s12 m6");  // add a class
+            // .html("<div>stuff here</div>");
+
+            $rowDiv.append($colDiv);
+
+            var $cardDiv = $("<div>")   // creates a div element
+            // .attr("id", "someID")  // adds the id
+            .addClass("card blue-grey darken-1");   // add a class
+            // .html("<div>stuff here</div>");
+
+            $colDiv.append($cardDiv);
+
+             var $card_ContentdDiv = $("<div>")   // creates a div element
+            // .attr("id", "someID")  // adds the id
+            .addClass("card-content white-text");   // add a class
+            // .html("<div>stuff here</div>");
+
+            $cardDiv.append($card_ContentdDiv);
+
+            var $card_titleDiv = $("<span>/")   // creates a div element
+            // .attr("id", "someID")  // adds the id
+            .addClass("card-title");   // add a class
+            // .html("<div>stuff here</div>");
+            $card_ContentdDiv.append($card_titleDiv);
+            $card_titleDiv.text(indicators[i].title.en);
+
+            $card_ContentdDiv.html('<p>'+regionsStatsCan_En[indicators[i].geo_code]+'</p><br/><p>'+regionsStatsCan_En[indicators[i].geo_code]+'</p><br/><p>'+indicators[i].refper.en+'</p><br/>'
+
+            );
+            
+            $card_ContentdDiv.append($rowDiv);
         }
-        $('.container').find('p').append(divEl);
+        
 
     
    }
+   $('.container').find('p').append(divEl);
 }
 
 $(document).ready(function(){
