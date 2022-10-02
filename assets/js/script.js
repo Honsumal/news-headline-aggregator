@@ -21,7 +21,7 @@ let search = $("#searchForm");
 function thingy(e) {
     e.preventDefault();
     searchquery = $("#search").val();
-    console.log(searchquery)
+    getNews(searchquery)
 }
 
 search.on("submit", thingy)
@@ -111,9 +111,10 @@ function displayNews(APInews) {
         //Headline
         let headline = document.createElement("a");
         headline.setAttribute("target","_blank");
-        headline.classList.add("headline-link", "text-black"); // Styling for headline links
+        headline.classList.add("headline-link", "black-text"); // Styling for headline links
         headline.setAttribute("href",APInews.articles[i].link);
         let headlineText = document.createElement("h5");
+        headlineText.classList.add("black-text")
         headlineText.textContent=(APInews.articles[i].title);
         headline.append(headlineText);
         newsBody.append(headline);
@@ -145,6 +146,10 @@ $('#aSearchButton').on('click', function(event){
         gArea: $('#gArea').val(),
         theme: $('#theme').val()
     };
+
+    let aQuery = query.query + "+" + query.gArea + "+" + query.theme
+
+    getNews(aQuery)
 });
 
 function parseStatsCanIndicators(data) {
