@@ -16,7 +16,6 @@ let theme = {
 extractStatsCanThemes("housing");
 fetchStatsCanHeadlines("money");
 
-
 let search = $("#searchForm");
 
 function thingy(e) {
@@ -70,6 +69,8 @@ function fetchStatsCanHeadlines() {
                 parseStatsCanIndicators(data);
                 filterStatsCanIndicators(['Ontario','Canada'],['Earnings']);
                 // displayStatsCanHeadlines();
+
+                console.log(regionsStatsCan_En)
 
               })
               .catch(console.error)
