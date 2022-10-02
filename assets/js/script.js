@@ -28,7 +28,6 @@ function thingy(e) {
 search.on("submit", thingy)
 
 
-
 // function takes in the themes string from payload and extracts and returns comma delimitted  theme labels
 function extractStatsCanThemes(str) {
     let themeStr = str;
@@ -104,7 +103,7 @@ function displayNews(APInews) {
     for (i=0;i<APInews.articles.length;i++) {
         // Outer shell
         let newsOuterContainer = document.createElement("div");
-        newsOuterContainer.classList.add("card", "p-2", "border", "row");
+        newsOuterContainer.classList.add("card", "col", "s12");
         // Inner Shell
         let newsBody = document.createElement("div");
         newsBody.classList.add("card-content");
