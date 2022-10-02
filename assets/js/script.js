@@ -144,7 +144,8 @@ $('#aSearchButton').on('click', function(event){
         query: $('#queryInput').val(),
         gArea: $('#gArea').val(),
         theme: $('#theme').val()
-    };
+    }
+});
 
 function parseStatsCanIndicators(data) {
     let indicators = data.results.indicators;
@@ -506,3 +507,7 @@ $(document).ready(function() {
 $(document).ready(function(){
 $('.modal').modal();
 });
+
+$(document).ready(function(){
+    $('.sidenav').sidenav();
+  });
