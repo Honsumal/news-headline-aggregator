@@ -111,15 +111,14 @@ function displayNews(APInews) {
         //Headline
         let headline = document.createElement("a");
         headline.setAttribute("target","_blank");
-        headline.classList.add("headline-link"); // Styling for headline links
+        headline.classList.add("headline-link", "text-black"); // Styling for headline links
         headline.setAttribute("href",APInews.articles[i].link);
-        let headlineText = document.createElement("h1");
+        let headlineText = document.createElement("h5");
         headlineText.textContent=(APInews.articles[i].title);
         headline.append(headlineText);
         newsBody.append(headline);
         //Source
-        let source = document.createElement("h4");
-        source.classList.add("card-title");
+        let source = document.createElement("h6");
         source.textContent = (APInews.articles[i].clean_url);
         newsBody.append(source);
         //Text
@@ -146,7 +145,7 @@ $('#aSearchButton').on('click', function(event){
         gArea: $('#gArea').val(),
         theme: $('#theme').val()
     };
-})
+});
 
 function parseStatsCanIndicators(data) {
     let indicators = data.results.indicators;
@@ -508,3 +507,7 @@ $(document).ready(function() {
 $(document).ready(function(){
 $('.modal').modal();
 });
+
+$(document).ready(function(){
+    $('.sidenav').sidenav();
+  });
