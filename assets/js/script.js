@@ -21,7 +21,7 @@ let search = $("#searchForm");
 function thingy(e) {
     e.preventDefault();
     searchquery = $("#search").val();
-    console.log(searchquery)
+    getNews(searchquery)
 }
 
 search.on("submit", thingy)
@@ -99,7 +99,12 @@ function getNews(query) {
 }
 
 function displayNews(APInews) {
-    let newsList = $("#articles-list");
+    let newsList = document.getElementById("articles-list");
+    console.log(newsList)
+    while (newsList.childElementCount > 0) {
+        let remove = newsList.children[0];
+        newsList.removeChild(remove);
+    }
     for (i=0;i<APInews.articles.length;i++) {
         // Outer shell
         let newsOuterContainer = document.createElement("div");
@@ -110,9 +115,10 @@ function displayNews(APInews) {
         //Headline
         let headline = document.createElement("a");
         headline.setAttribute("target","_blank");
-        headline.classList.add("headline-link", "text-black"); // Styling for headline links
+        headline.classList.add("headline-link", "black-text"); // Styling for headline links
         headline.setAttribute("href",APInews.articles[i].link);
         let headlineText = document.createElement("h5");
+        headlineText.classList.add("black-text")
         headlineText.textContent=(APInews.articles[i].title);
         headline.append(headlineText);
         newsBody.append(headline);
@@ -145,9 +151,15 @@ $('#aSearchButton').on('click', function(event){
         theme: $('#theme').val()
     };
 
+
     $('#sidebar-select-region').val($('#gArea').val());
     $('#sidebar-select-theme').val($('#theme').val());
     displayStatsCanHeadlines(indicators_en,'.sidebar-content');
+
+
+    let aQuery = query.query + "+" + query.gArea + "+" + query.theme
+
+    getNews(aQuery)
 
 });
 
