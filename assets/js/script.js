@@ -1,5 +1,3 @@
-let apiKey = "c0727ad6f00544e28f79127521a31139"
-
 let regionsStatsCan_En = []; // English regions array
 let themesStatsCan_En = []; // English themes array
 let searchquery;
@@ -11,14 +9,15 @@ let theme = {
 };
 
 
-extractStatsCanThemes("housing");
-fetchStatsCanHeadlines("money");
+// extractStatsCanThemes("housing");
+// fetchStatsCanHeadlines("money");
 
 let search = $("#searchForm");
 
 function thingy(e) {
     e.preventDefault();
     searchquery = $("#search").val();
+    console.log(searchquery)
 }
 
 search.on("submit", thingy)
@@ -131,7 +130,17 @@ function displayNews(APInews) {
     }
 }
 
+$('#aSearchButton').on('click', function(event){
+    event.preventDefault();
 
+    let query = {
+        query: $('#queryInput').val(),
+        gArea: $('#gArea').val(),
+        theme: $('#theme').val()
+    };
+
+    console.log(query)
+})
 
 // displays the StatsCan information based on input region/theme criteria to be obtained form user search UI at top of page
 function displayStatsCanHeadlines(geo,theme,data) {
@@ -290,7 +299,10 @@ $(document).ready(function(){
     $('select').formSelect();
   });
 
+$(document).ready(function() {
+    $('input#input_text, textarea#textarea2').characterCounter();
+});
+
 $(document).ready(function(){
-// the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
-$('.modal-trigger').modal();
+$('.modal').modal();
 });
