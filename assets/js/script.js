@@ -130,7 +130,12 @@ function getNews(query) {
 }
 
 function displayNews(APInews) {
-    let newsList = $("#articles-list");
+    let newsList = document.getElementById("articles-list");
+    console.log(newsList)
+    while (newsList.childElementCount > 0) {
+        let remove = newsList.children[0];
+        newsList.removeChild(remove);
+    }
     for (i=0;i<APInews.articles.length;i++) {
         // Outer shell
         let newsOuterContainer = document.createElement("div");
