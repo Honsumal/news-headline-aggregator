@@ -67,8 +67,8 @@ function fetchStatsCanHeadlines() {
 
                 console.log(data);
                 parseStatsCanIndicators(data);
-                filterStatsCanIndicators(['Ontario','Canada'],['Earnings']);
-                // displayStatsCanHeadlines();
+                // filterStatsCanIndicators(['Ontario','Canada'],['Earnings']);
+                displayStatsCanHeadlines(indicators_en,'.sidebar-content');
 
                 console.log(regionsStatsCan_En)
 
@@ -213,287 +213,56 @@ function filterStatsCanIndicators(region,theme) {
 }
 
 // displays the StatsCan information based on input region/theme criteria to be obtained form user search UI at top of page
-function displayStatsCanHeadlines() {
+function displayStatsCanHeadlines(dataArr,displayElement) {
 
-    let thisTitle="";
-    let prevTitle="";
-    var divEl = $('<div>');
-    let indicators = data.results.indicators;
-    let includeGeo=[];
-    let includeTheme=[];
 
-    if (geo==='') {
-        includeGeo = regionsStatsCan_En;
-    } else {
-        includeGeo = geo;
-    }
+    let indicators = dataArr;
 
-    if (theme==='') {
-        themesStatsCan_En.forEach(element => {
-                includeTheme.push(element.label);
-        });
-    } else {
-        includeTheme = theme;
-    }
+    indicators.forEach(elem => {
 
-    indicators.forEach((element,index,arr) => {
+
+        let $colDiv = $('<div>').addClass("col s12 m1").attr('style',"padding: 0 10px 0 10px;");
+
+        let $cardDiv = $('<div>').addClass("card horizontal");
+        $($colDiv).append($cardDiv);
+
+       let $cardstackedDiv = $('<div>').addClass("card-stacked");
+        $cardDiv.append($cardstackedDiv);
+
+        let $cardcontentDiv = $('<div>').addClass("card-content").attr('style',"padding: 10px; text-align: center;");
+        $cardstackedDiv.append($cardcontentDiv);
         
-        let themes = [];
-        themes = extractStatsCanThemes(element.themes).split(', ');
+        $cardTitle = $('<a>');
+        $cardTitle.text(elem.title);
+        $cardTitle.attr('href',elem.dailyUrl);
+        $cardTitle.attr('target',"_blank");
+        $cardcontentDiv.append($cardTitle);
 
-        const filteredThemes = themes.filter(value => includeTheme.includes(value));
-        const filteredGeo = includeGeo.filter(value => regionsStatsCan_En[element.geo_code].includes(value));
+        $cardDate = $('<p>');
+        $cardDate.text(elem.date);
+        $cardcontentDiv.append($cardDate);
 
-        console.log(themes);
-        console.log(includeTheme);
-        console.log(filteredThemes);
+        $cardAmount = $('<p>');
+        $cardAmount.text(elem.amount);
+        $cardcontentDiv.append($cardAmount);
 
-        console.log(regionsStatsCan_En[element.geo_code]);
-        console.log(includeGeo);
-        console.log(filteredGeo);
-       
-        // console.log('includes geo:',includeGeo.includes(regionsStatsCan_En[element.geo_code]));
-        // console.log('includes geo:',regionsStatsCan_En[element.geo_code]);
-        // console.log('includes theme:',themes.includes(includeTheme));
-        // console.log('includes theme:',themes);
-        // console.log('includes theme:',includeTheme);
+        $cardRate = $('<p>');
+        $cardRate.text(elem.rate+' '+elem.arrow);
+        $cardcontentDiv.append($cardRate);
 
-        if (filteredThemes===null)
-            {   
-                console.log('Filter In: ',extractStatsCanThemes(element.themes));
-            } else {
-                console.log('Filter Out: ',extractStatsCanThemes(element.themes));
-                arr.splice(index, 1);
-            }
+        $cardPeriod = $('<p>');
+        $cardPeriod.text(elem.period);
+        $cardcontentDiv.append($cardPeriod);
 
-        if (includeGeo.includes(regionsStatsCan_En[element.geo_code]))
-        {   
-            console.log('Filter In: ',regionsStatsCan_En[element.geo_code]);
-        } else {
-            console.log('Filter Out: ',regionsStatsCan_En[element.geo_code]);
-            arr.splice(index, 1);
-        }
+        $cardSource = $('<a>');
+        $cardSource.text('Data source:'+elem.sourceID);
+        $cardSource.attr('href','https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid='+elem.sourceID+'01');
+        $cardSource.attr('target',"_blank");
+        $cardcontentDiv.append($cardSource);
 
+        $(displayElement).append($colDiv);
     });
-    // console.log(indicators.length);
-    // console.log(indicators);
 
-//    {
-
-    for (let i=0;i<indicators.length;i++) {
-
-        // // for each new object I want to check whether we are at the start of a new rubric.  If we are at start of new rubric THEN terminate the previous item list (if any), THEN display the rubric name AND display the first report title in the rubric as a first list item. If it's a subsequent rubric name appearance then ONLY append the new report title to the previous item list.
-
-        if (i===0) {
-            prevTitle="";
-        } else {
-            prevTitle = indicators[i-1].daily_title.en;
-        }
-
-        thisTitle = indicators[i].daily_title.en;
-
-        let sameRubric=false;
-
-        if (thisTitle===prevTitle) {
-            sameRubric=true;
-        }
-
-        if (sameRubric) {
-
-            // var linkEl = $('<a>');
-            // let title = indicators[i].title.en + '::' + regionsStatsCan_En[indicators[i].geo_code]; 
-            // title = title + ', ' + indicators[i].refper.en;
-            // title = title + ', ' + indicators[i].value.en;
-            // if (indicators[i].growth_rate!=null) {
-            //     title = title + ', ' + indicators[i].growth_rate.growth.en;
-            //     if (indicators[i].growth_rate.arrow_direction==1) {
-            //         title = title + ' ⬆ ';
-            //     } else {
-            //         title = title + ' ⬇ ';
-            //     }
-            //     title = title + ', ' + indicators[i].growth_rate.details.en;
-            // }
-            // title = title + ' ['+extractStatsCanThemes(indicators[i].themes)+']';
-            // linkEl.text(title);
-            // linkEl.attr('href','https://www.statcan.gc.ca/'+indicators[i].daily_url.en);
-            // linkEl.attr('style','font-size: 1rem;');
-            // listEl.append(linkEl);
-            // listEl.append('<br/>');
-
-            var $rowDiv = $("<div>")   // creates a div element
-            // .attr("id", "someID")  // adds the id
-            .addClass("row");   // add a class
-            // .html("<div>stuff here</div>");
-
-            divEl.append($rowDiv);  
-
-            var $colDiv = $("<div>")   // creates a div element
-            // .attr("id", "someID")  // adds the id
-            .addClass("col s12 m6");  // add a class
-            // .html("<div>stuff here</div>");
-
-            $rowDiv.append($colDiv);
-
-            var $cardDiv = $("<div>")   // creates a div element
-            // .attr("id", "someID")  // adds the id
-            .addClass("card blue-grey darken-1");   // add a class
-            // .html("<div>stuff here</div>");
-
-            $colDiv.append($cardDiv);
-
-             var $card_ContentdDiv = $("<div>")   // creates a div element
-            // .attr("id", "someID")  // adds the id
-            .addClass("card-content white-text");   // add a class
-            // .html("<div>stuff here</div>");
-
-            $cardDiv.append($card_ContentdDiv);
-
-            var $card_titleDiv = $("<span>/")   // creates a div element
-            // .attr("id", "someID")  // adds the id
-            .addClass("card-title");   // add a class
-            // .html("<div>stuff here</div>");
-            $card_ContentdDiv.append($card_titleDiv);
-            $card_titleDiv.text(indicators[i].title.en);
-
-            $card_ContentdDiv.html('<p>'+regionsStatsCan_En[indicators[i].geo_code]+'</p><br/><p>'+regionsStatsCan_En[indicators[i].geo_code]+'</p><br/><p>'+indicators[i].refper.en+'</p><br/>'
-
-            );
-            
-            
-            $card_ContentdDiv.append($rowDiv);
-
-
-        } else {
-
-            if (i===0) {
-                var $rowDiv = $("<div>")   // creates a div element
-                // .attr("id", "someID")  // adds the id
-                .addClass("row");   // add a class
-                // .html("<div>stuff here</div>");
-
-                divEl.append($rowDiv);  
-
-                var $colDiv = $("<div>")   // creates a div element
-                // .attr("id", "someID")  // adds the id
-                .addClass("col s12 m6");  // add a class
-                // .html("<div>stuff here</div>");
-
-                $rowDiv.append($colDiv);
-
-                var $cardDiv = $("<div>")   // creates a div element
-                // .attr("id", "someID")  // adds the id
-                .addClass("card blue-grey darken-1");   // add a class
-                // .html("<div>stuff here</div>");
-
-                $colDiv.append($cardDiv);
-
-                 var $card_ContentdDiv = $("<div>")   // creates a div element
-                // .attr("id", "someID")  // adds the id
-                .addClass("card-content white-text");   // add a class
-                // .html("<div>stuff here</div>");
-
-                $cardDiv.append($card_ContentdDiv);
-
-                var $card_titleDiv = $("<span>/")   // creates a div element
-                // .attr("id", "someID")  // adds the id
-                .addClass("card-title");   // add a class
-                // .html("<div>stuff here</div>");
-                $card_ContentdDiv.append($card_titleDiv);
-                $card_titleDiv.text(thisTitle);
-                
-                // listEl = $("<ul>");
-                // $card_ContentdDiv.append(listEl);
-
-            } else {
-                
-                divEl.append($rowDiv);
-
-                var $rowDiv = $("<div>")   // creates a div element
-                // .attr("id", "someID")  // adds the id
-                .addClass("row");   // add a class
-                // .html("<div>stuff here</div>");
-
-                divEl.append($rowDiv);  
-
-                var $colDiv = $("<div>")   // creates a div element
-                // .attr("id", "someID")  // adds the id
-                .addClass("col s12 m6");  // add a class
-                // .html("<div>stuff here</div>");
-
-                $rowDiv.append($colDiv);
-
-                var $cardDiv = $("<div>")   // creates a div element
-                // .attr("id", "someID")  // adds the id
-                .addClass("card blue-grey darken-1");   // add a class
-                // .html("<div>stuff here</div>");
-
-                $colDiv.append($cardDiv);
-
-                 var $card_ContentdDiv = $("<div>")   // creates a div element
-                // .attr("id", "someID")  // adds the id
-                .addClass("card-content white-text");   // add a class
-                // .html("<div>stuff here</div>");
-
-                $cardDiv.append($card_ContentdDiv);
-
-                var $card_titleDiv = $("<span>/")   // creates a div element
-                // .attr("id", "someID")  // adds the id
-                .addClass("card-title");   // add a class
-                // .html("<div>stuff here</div>");
-                $card_ContentdDiv.append($card_titleDiv);
-                $card_titleDiv.text(thisTitle);
-                
-                // listEl = $("<ul>");
-                // $card_ContentdDiv.append(listEl);
-            }
-
-            
-            var $rowDiv = $("<div>")   // creates a div element
-            // .attr("id", "someID")  // adds the id
-            .addClass("row");   // add a class
-            // .html("<div>stuff here</div>");
-
-            divEl.append($rowDiv);  
-
-            var $colDiv = $("<div>")   // creates a div element
-            // .attr("id", "someID")  // adds the id
-            .addClass("col s12 m6");  // add a class
-            // .html("<div>stuff here</div>");
-
-            $rowDiv.append($colDiv);
-
-            var $cardDiv = $("<div>")   // creates a div element
-            // .attr("id", "someID")  // adds the id
-            .addClass("card blue-grey darken-1");   // add a class
-            // .html("<div>stuff here</div>");
-
-            $colDiv.append($cardDiv);
-
-             var $card_ContentdDiv = $("<div>")   // creates a div element
-            // .attr("id", "someID")  // adds the id
-            .addClass("card-content white-text");   // add a class
-            // .html("<div>stuff here</div>");
-
-            $cardDiv.append($card_ContentdDiv);
-
-            var $card_titleDiv = $("<span>/")   // creates a div element
-            // .attr("id", "someID")  // adds the id
-            .addClass("card-title");   // add a class
-            // .html("<div>stuff here</div>");
-            $card_ContentdDiv.append($card_titleDiv);
-            $card_titleDiv.text(indicators[i].title.en);
-
-            $card_ContentdDiv.html('<p>'+regionsStatsCan_En[indicators[i].geo_code]+'</p><br/><p>'+regionsStatsCan_En[indicators[i].geo_code]+'</p><br/><p>'+indicators[i].refper.en+'</p><br/>'
-
-            );
-            
-            $card_ContentdDiv.append($rowDiv);
-        }
-        
-
-    
-   }
-   $('.container').find('p').append(divEl);
 }
 
 $(document).ready(function(){
