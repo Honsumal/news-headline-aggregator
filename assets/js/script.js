@@ -154,6 +154,7 @@ $('#aSearchButton').on('click', function(event){
 
     $('#sidebar-select-region').val($('#gArea').val());
     $('#sidebar-select-theme').val($('#theme').val());
+    $('.sidebar-content').html('');
     displayStatsCanHeadlines(indicators_en,'.sidebar-content');
 
 
@@ -208,25 +209,6 @@ function parseStatsCanIndicators(data) {
 
 }
 
-function filterStatsCanIndicators(region,theme) {
-    
-    let filteredArr =[];
-
-    console.log(filteredArr);
-    
-    indicators_en.forEach((element,index,arr) => {
-        
-
-        if (element.region===region && element.themes.includes(theme))
-            {   
-                filteredArr.push(element);
-            }
-       
-            
-    });
-    
-    console.log(filteredArr);
-}
 
 // displays the StatsCan information based on input region/theme criteria to be obtained form user search UI at top of page
 function displayStatsCanHeadlines(dataArr,displayElement) {
@@ -237,7 +219,8 @@ function displayStatsCanHeadlines(dataArr,displayElement) {
     let selectTheme = $('#sidebar-select-theme').val();
 
 
-    $(displayElement).innerHTML ='';    
+    $(displayElement).innerHTML ='';  
+
     indicators.forEach(elem => {
 
             console.log('Elements themes:',elem.themes);
@@ -294,11 +277,15 @@ function displayStatsCanHeadlines(dataArr,displayElement) {
 
 }
 
-function updateRegion() {
+function updateRegion(e) {
+    e.preventDefault();
+    $('.sidebar-content').html('');
     displayStatsCanHeadlines(indicators_en,'.sidebar-content');
 }
 
-function updateTheme() {
+function updateTheme(e) {
+    e.preventDefault();
+    $('.sidebar-content').html('');
     displayStatsCanHeadlines(indicators_en,'.sidebar-content');
 }
 
@@ -320,11 +307,33 @@ $(document).ready(function(){
 
 
 
-  $('#sidebar-form').on('submit',updateRegion);
-  $('#sidebar-form').on('submit',updateTheme);
+//   $('#sidebar-form').on('change',updateRegion);
+//   $('#sidebar-select-theme').on('change',updateTheme);
+
+
+$('#sidebar-select-theme').on("click", () => {
+    // if default value is changed
+    $('#sidebar-select-theme').on("change", () => {
+      // if value switched by client
+      $('.sidebar-content').html('');  
+      displayStatsCanHeadlines(indicators_en,'.sidebar-content');
+
+      });
+    });
+
+ $('#sidebar-select-region').on("click", () => {
+        // if default value is changed
+        $('#sidebar-select-region').on("change", () => {
+          // if value switched by client
+          $('.sidebar-content').html('');  
+          displayStatsCanHeadlines(indicators_en,'.sidebar-content');
+          
+          });
+        });
 
   function init() {
- 
+    $('#sidebar-select-region').val('Canada');
+    $('#sidebar-select-theme').val('Employment and unemployment');
     fetchStatsCanHeadlines();
   }
 

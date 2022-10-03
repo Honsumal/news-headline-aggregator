@@ -63,7 +63,7 @@
               <div class="col s6">
                 <label for="gArea">Geographic Area</label>
                 <select id="gArea"onchange="sidebar-select-region.form.submit()">
-                  <option value = "Canada" selected>Canada</option>
+                  <option value = "Canada">Canada</option>
                   <option value = "Alberta">Alberta</option>
                   <option value = "British Columbia">British Columbia</option>
                   <option value = "Manitoba">Manitoba</option>
@@ -102,7 +102,7 @@
                   <option value = "Economic accounts">Economic Accounts</option>
                   <option value = "Education, training and learning">Education, Training, and Learning</option>
                   <option value = "Elementary and secondary education">Elementary and Secondary Education</option>
-                  <option value = "Employment and unemployment" selected>Employment and Unemployment</option>
+                  <option value = "Employment and unemployment">Employment and Unemployment</option>
                   <option value = "Energy">Energy</option>
                   <option value = "Environment">Environment</option>
                   <option value = "Environmental protectection, technology and practices">Environmental Protection, Technology, and Practices</option>
@@ -171,8 +171,8 @@
   <h1 style="font-size: 1.5rem; padding-left: 5px;">StatsCan Indicators</h1>
   <form id="sidebar-form">
   <label style="font-size: 1.2rem; padding-left: 8px;">Select Region:</label>
-  <select class="browser-default" id="sidebar-select-region" onchange="this.form.submit()">
-    <option value = "Canada" selected>Canada</option>
+  <select class="browser-default" id="sidebar-select-region">
+    <option value = "Canada">Canada</option>
     <option value = "Alberta">Alberta</option>
     <option value = "British Columbia">British Columbia</option>
     <option value = "Manitoba">Manitoba</option>
@@ -188,7 +188,7 @@
     <option value = "Yukon">Yukon</option> 
   </select>
   <label style="font-size: 1.2rem; padding-left: 8px;">Select Theme:</label>
-  <select class="browser-default" id="sidebar-select-theme" onchange="this.form.submit()">
+  <select class="browser-default" id="sidebar-select-theme">
     <option value = "Agriculture and food">Agriculture and Food</option>
     <option value = "Air and climate">Air and Climate</option>
     <option value = "Air transportation">Air Transportation</option>
@@ -209,7 +209,7 @@
     <option value = "Economic accounts">Economic Accounts</option>
     <option value = "Education, training and learning">Education, Training, and Learning</option>
     <option value = "Elementary and secondary education">Elementary and Secondary Education</option>
-    <option value = "Employment and unemployment" selected>Employment and Unemployment</option>
+    <option value = "Employment and unemployment">Employment and Unemployment</option>
     <option value = "Energy">Energy</option>
     <option value = "Environment">Environment</option>
     <option value = "Environmental protectection, technology and practices">Environmental Protection, Technology, and Practices</option>
@@ -260,8 +260,11 @@
     <option value = "Travel and tourism">Travel and Tourism</option>
   </select>
   </form>
-  <div class="sidebar-content">
+  <div class="sidebar-content" style="margin-bottom: 30px;">
 
+
+  </div>
+  <div>
 
   </div>
 
