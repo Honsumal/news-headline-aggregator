@@ -2,24 +2,17 @@ let regionsStatsCan_En = []; // English regions array
 let themesStatsCan_En = []; // English themes array
 let indicators_en = [];
 let searchquery;
+let search = $("#searchForm");
 
+// Lines 6 - 15 give functionality to the search history modal on loading
 let sHistory = []
-
-
 let storedHistory = JSON.parse(localStorage.getItem('searchHistory'))
 
 if (storedHistory !== null)
     sHistory = storedHistory
 
 sHistory = storedHistory
-
 showSearchHistory()
-
-
-let theme = {
-        theme_id: 0,
-        label: ""
-};
 
 // Saves queries to local storage
 function saveQuery (query){
@@ -37,11 +30,99 @@ function showSearchHistory () {
     .join('');
 };
 
+// functionality for the advanced search modal
+$('#aSearchButton').on('click', function(event){
+    event.preventDefault();
+
+    let query = {
+        query: $('#queryInput').val(),
+        gArea: $('#gArea').val(),
+        theme: $('#theme').val()
+    };
+
+
+    $('#sidebar-select-region').val($('#gArea').val());
+    $('#sidebar-select-theme').val($('#theme').val());
+    $('.sidebar-content').html('');
+    displayStatsCanHeadlines(indicators_en,'.sidebar-content');
+
+
+    let aQuery = query.query + "+" + query.gArea + "+" + query.theme
+
+    getNews(aQuery)
+    saveQuery(aQuery)
+    showSearchHistory()
+});
+
+// function for getting News from search query. Limit of 21 calls/hour
+function getNews(query) {
+
+    let options = {
+        method: 'GET',
+        headers: {
+            'X-RapidAPI-Key': 'b8835ac7f4msh09512c251bb8c50p1f9a63jsnfcf8c28c6887',
+            'X-RapidAPI-Host': 'free-news.p.rapidapi.com'
+        }
+    };
+
+    fetch('https://free-news.p.rapidapi.com/v1/search?q=' + query + '&lang=en', options)
+        .then(response => response.json())
+        .then(function(data){
+
+            displayNews(data);
+        })
+        
+}
+
+// function for building the news headline obtained from getNews
+function displayNews(APInews) {
+    let newsList = document.getElementById("articles-list");
+
+    while (newsList.childElementCount > 0) {
+        let remove = newsList.children[0];
+        newsList.removeChild(remove);
+    }
+    for (i=0;i<APInews.articles.length;i++) {
+        // Outer shell
+        let newsOuterContainer = document.createElement("div");
+        newsOuterContainer.classList.add("card", "col", "s12");
+        // Inner Shell
+        let newsBody = document.createElement("div");
+        newsBody.classList.add("card-content");
+        //Headline
+        let headline = document.createElement("a");
+        headline.setAttribute("target","_blank");
+        headline.classList.add("headline-link", "black-text"); // Styling for headline links
+        headline.setAttribute("href",APInews.articles[i].link);
+        let headlineText = document.createElement("h5");
+        headlineText.classList.add("black-text")
+        headlineText.textContent=(APInews.articles[i].title);
+        headline.append(headlineText);
+        newsBody.append(headline);
+        //Source
+        let source = document.createElement("h6");
+        source.textContent = (APInews.articles[i].clean_url);
+        newsBody.append(source);
+        //Text
+        let textPreview = document.createElement("p");
+        textPreview.textContent = (APInews.articles[i].summary);
+        newsBody.append(textPreview);
+        //Readmore
+        let readMore = document.createElement("a");
+        readMore.setAttribute("target","_blank");
+        readMore.textContent = ("Read more here!");
+        readMore.setAttribute("href",APInews.articles[i].link);
+        newsBody.append(readMore)
+        // Add element to news headlines
+        newsOuterContainer.append(newsBody);
+        newsList.append(newsOuterContainer);
+    }
+}
+
 extractStatsCanThemes("housing");
 fetchStatsCanHeadlines("money");
 
-let search = $("#searchForm");
-
+// Provides functionality to search bar
 function thingy(e) {
     e.preventDefault();
     searchquery = $("#search").val();
@@ -51,6 +132,11 @@ function thingy(e) {
 }
 
 search.on("submit", thingy)
+
+let theme = {
+        theme_id: 0,
+        label: ""
+};
 
 
 // function takes in the themes string from payload and extracts and returns comma delimitted  theme labels
@@ -99,92 +185,6 @@ function fetchStatsCanHeadlines() {
               .catch(console.error)
 }
 
-function getNews(query) {
-
-    let options = {
-        method: 'GET',
-        headers: {
-            'X-RapidAPI-Key': 'b8835ac7f4msh09512c251bb8c50p1f9a63jsnfcf8c28c6887',
-            'X-RapidAPI-Host': 'free-news.p.rapidapi.com'
-        }
-    };
-
-    fetch('https://free-news.p.rapidapi.com/v1/search?q=' + query + '&lang=en', options)
-        .then(response => response.json())
-        .then(function(data){
-
-            displayNews(data);
-        })
-        
-}
-
-function displayNews(APInews) {
-    let newsList = document.getElementById("articles-list");
-
-    while (newsList.childElementCount > 0) {
-        let remove = newsList.children[0];
-        newsList.removeChild(remove);
-    }
-    for (i=0;i<APInews.articles.length;i++) {
-        // Outer shell
-        let newsOuterContainer = document.createElement("div");
-        newsOuterContainer.classList.add("card", "col", "s12");
-        // Inner Shell
-        let newsBody = document.createElement("div");
-        newsBody.classList.add("card-content");
-        //Headline
-        let headline = document.createElement("a");
-        headline.setAttribute("target","_blank");
-        headline.classList.add("headline-link", "black-text"); // Styling for headline links
-        headline.setAttribute("href",APInews.articles[i].link);
-        let headlineText = document.createElement("h5");
-        headlineText.classList.add("black-text")
-        headlineText.textContent=(APInews.articles[i].title);
-        headline.append(headlineText);
-        newsBody.append(headline);
-        //Source
-        let source = document.createElement("h6");
-        source.textContent = (APInews.articles[i].clean_url);
-        newsBody.append(source);
-        //Text
-        let textPreview = document.createElement("p");
-        textPreview.textContent = (APInews.articles[i].summary);
-        newsBody.append(textPreview);
-        //Readmore
-        let readMore = document.createElement("a");
-        readMore.setAttribute("target","_blank");
-        readMore.textContent = ("Read more here!");
-        readMore.setAttribute("href",APInews.articles[i].link);
-        newsBody.append(readMore)
-        // Add element to news headlines
-        newsOuterContainer.append(newsBody);
-        newsList.append(newsOuterContainer);
-    }
-}
-
-$('#aSearchButton').on('click', function(event){
-    event.preventDefault();
-
-    let query = {
-        query: $('#queryInput').val(),
-        gArea: $('#gArea').val(),
-        theme: $('#theme').val()
-    };
-
-
-    $('#sidebar-select-region').val($('#gArea').val());
-    $('#sidebar-select-theme').val($('#theme').val());
-    $('.sidebar-content').html('');
-    displayStatsCanHeadlines(indicators_en,'.sidebar-content');
-
-
-    let aQuery = query.query + "+" + query.gArea + "+" + query.theme
-
-    getNews(aQuery)
-    saveQuery(aQuery)
-    showSearchHistory()
-});
-
 function parseStatsCanIndicators(data) {
     let indicators = data.results.indicators;
 
@@ -229,7 +229,6 @@ function parseStatsCanIndicators(data) {
     // console.log(indicators_en);
 
 }
-
 
 // displays the StatsCan information based on input region/theme criteria to be obtained form user search UI at top of page
 function displayStatsCanHeadlines(dataArr,displayElement) {
@@ -310,6 +309,7 @@ function updateTheme(e) {
     displayStatsCanHeadlines(indicators_en,'.sidebar-content');
 }
 
+// Following are materialize js initializations
 $(document).ready(function(){
     $('select').formSelect();
   });
@@ -352,9 +352,10 @@ $('#sidebar-select-theme').on("click", () => {
           });
         });
 
-  function init() {
+function init() {
     $('#sidebar-select-region').val('Canada');
     $('#sidebar-select-theme').val('Employment and unemployment');
     fetchStatsCanHeadlines();
-  }
+}
 
+init();
