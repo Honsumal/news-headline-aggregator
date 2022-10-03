@@ -5,20 +5,16 @@ let searchquery;
 
 let sHistory = []
 
-function init (){
-    let storedHistory = JSON.parse(localStorage.getItem('searchHistory'))
 
-    console.log(storedHistory)
+let storedHistory = JSON.parse(localStorage.getItem('searchHistory'))
 
-    if (storedHistory !== null)
-        sHistory = storedHistory
+if (storedHistory !== null)
+    sHistory = storedHistory
 
-    console.log(sHistory)
+sHistory = storedHistory
 
-    showSearchHistory()
-}
+showSearchHistory()
 
-init()
 
 let theme = {
         theme_id: 0,
@@ -95,11 +91,9 @@ function fetchStatsCanHeadlines() {
                 }
                 themesStatsCan_En=data.results.themes_en; // extract the themes array 
 
-                console.log(data);
                 parseStatsCanIndicators(data);
                 displayStatsCanHeadlines(indicators_en,'.sidebar-content');
 
-                console.log(regionsStatsCan_En)
 
               })
               .catch(console.error)
@@ -118,11 +112,7 @@ function getNews(query) {
     fetch('https://free-news.p.rapidapi.com/v1/search?q=' + query + '&lang=en', options)
         .then(response => response.json())
         .then(function(data){
-            console.log(data)
-            console.log(data.articles[0].title)
-            console.log(data.articles[0].summary)
-            console.log(data.articles[0].clean_url)
-            console.log(data.articles[0].link)
+
             displayNews(data);
         })
         
@@ -130,7 +120,7 @@ function getNews(query) {
 
 function displayNews(APInews) {
     let newsList = document.getElementById("articles-list");
-    console.log(newsList)
+
     while (newsList.childElementCount > 0) {
         let remove = newsList.children[0];
         newsList.removeChild(remove);
@@ -236,7 +226,7 @@ function parseStatsCanIndicators(data) {
         indicators_en.push(indicator);
     });
 
-    console.log(indicators_en);
+    // console.log(indicators_en);
 
 }
 
@@ -254,13 +244,13 @@ function displayStatsCanHeadlines(dataArr,displayElement) {
 
     indicators.forEach(elem => {
 
-            console.log('Elements themes:',elem.themes);
-            console.log('Elements region:',elem.region);
-            console.log('Selected themes:',selectTheme);
-            console.log('Selected region:',selectRegion);
+            // console.log('Elements themes:',elem.themes);
+            // console.log('Elements region:',elem.region);
+            // console.log('Selected themes:',selectTheme);
+            // console.log('Selected region:',selectRegion);
             
-            console.log('Region match:',elem.region===selectRegion);
-            console.log('Theme match:',elem.themes.includes(selectTheme));
+            // console.log('Region match:',elem.region===selectRegion);
+            // console.log('Theme match:',elem.themes.includes(selectTheme));
 
         if (elem.region===selectRegion && elem.themes.includes(selectTheme)) {
             let $colDiv = $('<div>').addClass("col s12 m1").attr('style',"padding: 0 10px 0 10px;");
@@ -368,4 +358,3 @@ $('#sidebar-select-theme').on("click", () => {
     fetchStatsCanHeadlines();
   }
 
-  init();
