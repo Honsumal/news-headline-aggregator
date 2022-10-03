@@ -47,6 +47,7 @@
     </nav>
   </div>
       
+
   <div class="modal" id="aSeach">
     <div class="modal-content">
       <div class="modal-header">
@@ -57,7 +58,102 @@
           <div class="row">
             <div class="input-field col s12">
               <label for="queryInput">Search Query</label>
-              <input type="text" id="queryInput" class = "validate" placeholder="Enter your search query here">
+              <input type="text" id="queryInput" class = "validate" placeholder="Enter your search query here">  
+              </div>
+              <div class="col s6">
+                <label for="gArea">Geographic Area</label>
+                <select id="gArea"onchange="sidebar-select-region.form.submit()">
+                  <option value = "Canada">Canada</option>
+                  <option value = "Alberta">Alberta</option>
+                  <option value = "British Columbia">British Columbia</option>
+                  <option value = "Manitoba">Manitoba</option>
+                  <option value = "New Brunswick">New Brunswick</option>
+                  <option value = "Newfoundland and Labrador">Newfoundland & Labrador</option>
+                  <option value = "Northwest Territories">Northwest Territories</option>
+                  <option value = "Nova Scotia">Nova Scotia</option>
+                  <option value = "Nunavut">Nunavut</option>
+                  <option value = "Ontario">Ontario</option>
+                  <option value = "Prince Edward Island">Prince Edward Island</option>
+                  <option value = "Quebec">Quebec</option>
+                  <option value = "Saskatchewan">Saskatchewan</option>
+                  <option value = "Yukon">Yukon</option> 
+                </select>
+              </div>
+              <div class="col s6">
+                <label for="theme">Theme</label>
+                <select id="theme" onchange="sidebar-select-theme.form.submit()">
+                  <option value = "Agriculture and food">Agriculture and Food</option>
+                  <option value = "Air and climate">Air and Climate</option>
+                  <option value = "Air transportation">Air Transportation</option>
+                  <option value = "Animal production">Animal Production</option>
+                  <option value = "Business and consumer services and culture">Business and Consumer Services and Culture</option>
+                  <option value = "Business and consumer services">Business and consumer services</option>
+                  <option value = "Business ownership">Business Ownership</option>
+                  <option value = "Business performance and ownership">Business Performance and Ownership</option>
+                  <option value = "Children and youth">Children and Youth</option>
+                  <option value = "Construction">Construction</option>
+                  <option value = "Coronavirus">Coronavirus</option>
+                  <option value = "Crimes and offenses">Crimes and Offences</option>
+                  <option value = "Crop production">Crop Production</option>
+                  <option value = "Culture">Culture</option>
+                  <option value = "Digital economy and society">Digital Economy and Society</option>
+                  <option value = "Diseases and physical health conditions">Diseases and Physical Health Conditions</option>
+                  <option value = "Earnings, wages and non-wage benefits">Earnings, Wages, and Non-wage Benefits</option>
+                  <option value = "Economic accounts">Economic Accounts</option>
+                  <option value = "Education, training and learning">Education, Training, and Learning</option>
+                  <option value = "Elementary and secondary education">Elementary and Secondary Education</option>
+                  <option value = "Employment and unemployment">Employment and Unemployment</option>
+                  <option value = "Energy">Energy</option>
+                  <option value = "Environment">Environment</option>
+                  <option value = "Environmental protectection, technology and practices">Environmental Protection, Technology, and Practices</option>
+                  <option value = "Families, households and marital status">Families, Households, and Martial Status</option>
+                  <option value = "Farm business">Farm Business</option>
+                  <option value = "Farm characteristics">Farm Characteristics</option>
+                  <option value = "Financial resources invested in education">Financial Resources Invested in Education</option>
+                  <option value = "Financial statements and performance">Financial Statements and Performance</option>
+                  <option value = "Food">Food</option>
+                  <option value = "FOssil fuels">Fossil Fuels</option>
+                  <option value = "Government finance statistics">Government Finance Statistics</option>
+                  <option value = "Government">Government</option>
+                  <option value = "Health care services">Health Care Services</option>
+                  <option value = "Health">Health</option>
+                  <option value = "Hours of work and work arrangements">Hours of Work and Work Arrangements</option>
+                  <option value = "Household, family and personal income">Household, Family, and Personal Income</option>
+                  <option value = "Housing">Housing</option>
+                  <option value = "Immigrants and non-permanent residents">Immigrants and Non-Permanent Residents</option>
+                  <option value = "Immigration and ethnocultural diversity">Immigration and Ethnocultural Diversity</option>
+                  <option value = "Income, pensions, spending, and wealth">Income, Pensions, Spending, and Wealth</option>
+                  <option value = "Indigenous peoples">Indigenous Peoples</option>
+                  <option value = "International accounts">International Accounts</option>
+                  <option value = "International trade">International Trade</option>
+                  <option value = "Labour">Labour</option>
+                  <option value = "Land use">Land Use</option>
+                  <option value = "Language groups">Language Groups</option>
+                  <option value = "Languages">Languages</option>
+                  <option value = "Lifestyle and social conditions">Lifestyle and Social Conditions</option>
+                  <option value = "Low income and inequality">Low Income and Inequality</option>
+                  <option value = "Manufacturing">Manufacturing</option>
+                  <option value = "National accounts and Gross Domestic Product">National Accounts and GDP</option>
+                  <option value = "Older adults and population aging">Older Adults and Population Aging</option>
+                  <option value = "Pensions and retirement income programs">Pensions and Retirement Income Programs</option>
+                  <option value = "Population and demography">Population and Demography</option>
+                  <option value = "Population estimates">Population and Demography</option>
+                  <option value = "Postsecondary education">Postsecondary Education</option>
+                  <option value = "Prices and price indexes">Prices and price indexes</option>
+                  <option value = "Producer price indexes">Producer Price Indexes</option>
+                  <option value = "Productivity accounts">Productivity Accounts</option>
+                  <option value = "Research and development">Research and development</option>
+                  <option value = "Retail and wholesale">Retail and wholesale</option>
+                  <option value = "Road transportaion">Road Transportation</option>
+                  <option value = "Satellite accounts">Satellite Accounts</option>
+                  <option value = "Science and technology">Science and Technology</option>
+                  <option value = "Society and community">Society and Community</option>
+                  <option value = "Statistical methods">Statistical methods</option>
+                  <option value = "Transportation">Transportation</option>
+                  <option value = "Travel and tourism">Travel and Tourism</option>
+                  <option value = ""></option>                  
+                </select>
+              </div>
             </div>
             <div class="col s6">
               <label for="gArea">Geographic Area</label>
@@ -181,22 +277,102 @@
 <!-- SIDEBAR for STatsCan BEGIN -->
 <sidebar id="slide-out" class="sidenav sidenav-fixed" style="top: 64px;">
   <h1 style="font-size: 1.5rem; padding-left: 5px;">StatsCan Indicators</h1>
+  <form id="sidebar-form">
   <label style="font-size: 1.2rem; padding-left: 8px;">Select Region:</label>
-  <select class="browser-default">
-    <option value="" disabled selected>Choose your option</option>
-    <option value="1">Option 1</option>
-    <option value="2">Option 2</option>
-    <option value="3">Option 3</option>
+  <select class="browser-default" id="sidebar-select-region">
+    <option value = "Canada">Canada</option>
+    <option value = "Alberta">Alberta</option>
+    <option value = "British Columbia">British Columbia</option>
+    <option value = "Manitoba">Manitoba</option>
+    <option value = "New Brunswick">New Brunswick</option>
+    <option value = "Newfoundland and Labrador">Newfoundland & Labrador</option>
+    <option value = "Northwest Territories">Northwest Territories</option>
+    <option value = "Nova Scotia">Nova Scotia</option>
+    <option value = "Nunavut">Nunavut</option>
+    <option value = "Ontario">Ontario</option>
+    <option value = "Prince Edward Island">Prince Edward Island</option>
+    <option value = "Quebec">Quebec</option>
+    <option value = "Saskatchewan">Saskatchewan</option>
+    <option value = "Yukon">Yukon</option> 
   </select>
   <label style="font-size: 1.2rem; padding-left: 8px;">Select Theme:</label>
-  <select class="browser-default">
-    <option value="" disabled selected>Choose your option</option>
-    <option value="1">Option 1</option>
-    <option value="2">Option 2</option>
-    <option value="3">Option 3</option>
+  <select class="browser-default" id="sidebar-select-theme">
+    <option value = "Agriculture and food">Agriculture and Food</option>
+    <option value = "Air and climate">Air and Climate</option>
+    <option value = "Air transportation">Air Transportation</option>
+    <option value = "Animal production">Animal Production</option>
+    <option value = "Business and consumer services and culture">Business and Consumer Services and Culture</option>
+    <option value = "Business and consumer services">Business and consumer services</option>
+    <option value = "Business ownership">Business Ownership</option>
+    <option value = "Business performance and ownership">Business Performance and Ownership</option>
+    <option value = "Children and youth">Children and Youth</option>
+    <option value = "Construction">Construction</option>
+    <option value = "Coronavirus">Coronavirus</option>
+    <option value = "Crimes and offenses">Crimes and Offences</option>
+    <option value = "Crop production">Crop Production</option>
+    <option value = "Culture">Culture</option>
+    <option value = "Digital economy and society">Digital Economy and Society</option>
+    <option value = "Diseases and physical health conditions">Diseases and Physical Health Conditions</option>
+    <option value = "Earnings, wages and non-wage benefits">Earnings, Wages, and Non-wage Benefits</option>
+    <option value = "Economic accounts">Economic Accounts</option>
+    <option value = "Education, training and learning">Education, Training, and Learning</option>
+    <option value = "Elementary and secondary education">Elementary and Secondary Education</option>
+    <option value = "Employment and unemployment">Employment and Unemployment</option>
+    <option value = "Energy">Energy</option>
+    <option value = "Environment">Environment</option>
+    <option value = "Environmental protectection, technology and practices">Environmental Protection, Technology, and Practices</option>
+    <option value = "Families, households and marital status">Families, Households, and Martial Status</option>
+    <option value = "Farm business">Farm Business</option>
+    <option value = "Farm characteristics">Farm Characteristics</option>
+    <option value = "Financial resources invested in education">Financial Resources Invested in Education</option>
+    <option value = "Financial statements and performance">Financial Statements and Performance</option>
+    <option value = "Food">Food</option>
+    <option value = "FOssil fuels">Fossil Fuels</option>
+    <option value = "Government finance statistics">Government Finance Statistics</option>
+    <option value = "Government">Government</option>
+    <option value = "Health care services">Health Care Services</option>
+    <option value = "Health">Health</option>
+    <option value = "Hours of work and work arrangements">Hours of Work and Work Arrangements</option>
+    <option value = "Household, family and personal income">Household, Family, and Personal Income</option>
+    <option value = "Housing">Housing</option>
+    <option value = "Immigrants and non-permanent residents">Immigrants and Non-Permanent Residents</option>
+    <option value = "Immigration and ethnocultural diversity">Immigration and Ethnocultural Diversity</option>
+    <option value = "Income, pensions, spending, and wealth">Income, Pensions, Spending, and Wealth</option>
+    <option value = "Indigenous peoples">Indigenous Peoples</option>
+    <option value = "International accounts">International Accounts</option>
+    <option value = "International trade">International Trade</option>
+    <option value = "Labour">Labour</option>
+    <option value = "Land use">Land Use</option>
+    <option value = "Language groups">Language Groups</option>
+    <option value = "Languages">Languages</option>
+    <option value = "Lifestyle and social conditions">Lifestyle and Social Conditions</option>
+    <option value = "Low income and inequality">Low Income and Inequality</option>
+    <option value = "Manufacturing">Manufacturing</option>
+    <option value = "National accounts and Gross Domestic Product">National Accounts and GDP</option>
+    <option value = "Older adults and population aging">Older Adults and Population Aging</option>
+    <option value = "Pensions and retirement income programs">Pensions and Retirement Income Programs</option>
+    <option value = "Population and demography">Population and Demography</option>
+    <option value = "Population estimates">Population and Demography</option>
+    <option value = "Postsecondary education">Postsecondary Education</option>
+    <option value = "Prices and price indexes">Prices and price indexes</option>
+    <option value = "Producer price indexes">Producer Price Indexes</option>
+    <option value = "Productivity accounts">Productivity Accounts</option>
+    <option value = "Research and development">Research and development</option>
+    <option value = "Retail and wholesale">Retail and wholesale</option>
+    <option value = "Road transportaion">Road Transportation</option>
+    <option value = "Satellite accounts">Satellite Accounts</option>
+    <option value = "Science and technology">Science and Technology</option>
+    <option value = "Society and community">Society and Community</option>
+    <option value = "Statistical methods">Statistical methods</option>
+    <option value = "Transportation">Transportation</option>
+    <option value = "Travel and tourism">Travel and Tourism</option>
   </select>
-  <div class="sidebar-content">
+  </form>
+  <div class="sidebar-content" style="margin-bottom: 30px;">
 
+
+  </div>
+  <div>
 
   </div>
 

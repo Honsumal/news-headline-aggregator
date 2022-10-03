@@ -97,7 +97,6 @@ function fetchStatsCanHeadlines() {
 
                 console.log(data);
                 parseStatsCanIndicators(data);
-                // filterStatsCanIndicators(['Ontario','Canada'],['Earnings']);
                 displayStatsCanHeadlines(indicators_en,'.sidebar-content');
 
                 console.log(regionsStatsCan_En)
@@ -182,6 +181,13 @@ $('#aSearchButton').on('click', function(event){
         theme: $('#theme').val()
     };
 
+
+    $('#sidebar-select-region').val($('#gArea').val());
+    $('#sidebar-select-theme').val($('#theme').val());
+    $('.sidebar-content').html('');
+    displayStatsCanHeadlines(indicators_en,'.sidebar-content');
+
+
     let aQuery = query.query + "+" + query.gArea + "+" + query.theme
 
     getNews(aQuery)
@@ -234,77 +240,84 @@ function parseStatsCanIndicators(data) {
 
 }
 
-function filterStatsCanIndicators(region,theme) {
-    
-    let filteredArr =[];
-
-    console.log(filteredArr);
-    
-    indicators_en.forEach((element,index,arr) => {
-        
-
-        if (element.region===region && element.themes.includes(theme))
-            {   
-                filteredArr.push(element);
-            }
-       
-            
-    });
-    
-    console.log(filteredArr);
-}
 
 // displays the StatsCan information based on input region/theme criteria to be obtained form user search UI at top of page
 function displayStatsCanHeadlines(dataArr,displayElement) {
 
 
     let indicators = dataArr;
+    let selectRegion = $('#sidebar-select-region').val();
+    let selectTheme = $('#sidebar-select-theme').val();
+
+
+    $(displayElement).innerHTML ='';  
 
     indicators.forEach(elem => {
 
+            console.log('Elements themes:',elem.themes);
+            console.log('Elements region:',elem.region);
+            console.log('Selected themes:',selectTheme);
+            console.log('Selected region:',selectRegion);
+            
+            console.log('Region match:',elem.region===selectRegion);
+            console.log('Theme match:',elem.themes.includes(selectTheme));
 
-        let $colDiv = $('<div>').addClass("col s12 m1").attr('style',"padding: 0 10px 0 10px;");
+        if (elem.region===selectRegion && elem.themes.includes(selectTheme)) {
+            let $colDiv = $('<div>').addClass("col s12 m1").attr('style',"padding: 0 10px 0 10px;");
 
-        let $cardDiv = $('<div>').addClass("card horizontal");
-        $($colDiv).append($cardDiv);
+            let $cardDiv = $('<div>').addClass("card horizontal");
+            $($colDiv).append($cardDiv);
 
-       let $cardstackedDiv = $('<div>').addClass("card-stacked");
-        $cardDiv.append($cardstackedDiv);
+            let $cardstackedDiv = $('<div>').addClass("card-stacked");
+            $cardDiv.append($cardstackedDiv);
 
-        let $cardcontentDiv = $('<div>').addClass("card-content").attr('style',"padding: 10px; text-align: center;");
-        $cardstackedDiv.append($cardcontentDiv);
-        
-        $cardTitle = $('<a>');
-        $cardTitle.text(elem.title);
-        $cardTitle.attr('href',elem.dailyUrl);
-        $cardTitle.attr('target',"_blank");
-        $cardcontentDiv.append($cardTitle);
+            let $cardcontentDiv = $('<div>').addClass("card-content").attr('style',"padding: 10px; text-align: center;");
+            $cardstackedDiv.append($cardcontentDiv);
+            
+            $cardTitle = $('<a>');
+            $cardTitle.text(elem.region+' - '+elem.title);
+            $cardTitle.attr('href',elem.dailyUrl);
+            $cardTitle.attr('target',"_blank");
+            $cardcontentDiv.append($cardTitle);
 
-        $cardDate = $('<p>');
-        $cardDate.text(elem.date);
-        $cardcontentDiv.append($cardDate);
+            $cardDate = $('<p>');
+            $cardDate.text(elem.date);
+            $cardcontentDiv.append($cardDate);
 
-        $cardAmount = $('<p>');
-        $cardAmount.text(elem.amount);
-        $cardcontentDiv.append($cardAmount);
+            $cardAmount = $('<p>');
+            $cardAmount.text(elem.amount);
+            $cardcontentDiv.append($cardAmount);
 
-        $cardRate = $('<p>');
-        $cardRate.text(elem.rate+' '+elem.arrow);
-        $cardcontentDiv.append($cardRate);
+            $cardRate = $('<p>');
+            $cardRate.text(elem.rate+' '+elem.arrow);
+            $cardcontentDiv.append($cardRate);
 
-        $cardPeriod = $('<p>');
-        $cardPeriod.text(elem.period);
-        $cardcontentDiv.append($cardPeriod);
+            $cardPeriod = $('<p>');
+            $cardPeriod.text(elem.period);
+            $cardcontentDiv.append($cardPeriod);
 
-        $cardSource = $('<a>');
-        $cardSource.text('Data source:'+elem.sourceID);
-        $cardSource.attr('href','https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid='+elem.sourceID+'01');
-        $cardSource.attr('target',"_blank");
-        $cardcontentDiv.append($cardSource);
+            $cardSource = $('<a>');
+            $cardSource.text('Data source:'+elem.sourceID);
+            $cardSource.attr('href','https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid='+elem.sourceID+'01');
+            $cardSource.attr('target',"_blank");
+            $cardcontentDiv.append($cardSource);
 
-        $(displayElement).append($colDiv);
+            $(displayElement).append($colDiv);
+        }
     });
 
+}
+
+function updateRegion(e) {
+    e.preventDefault();
+    $('.sidebar-content').html('');
+    displayStatsCanHeadlines(indicators_en,'.sidebar-content');
+}
+
+function updateTheme(e) {
+    e.preventDefault();
+    $('.sidebar-content').html('');
+    displayStatsCanHeadlines(indicators_en,'.sidebar-content');
 }
 
 $(document).ready(function(){
@@ -322,3 +335,37 @@ $('.modal').modal();
 $(document).ready(function(){
     $('.sidenav').sidenav();
   });
+
+
+
+//   $('#sidebar-form').on('change',updateRegion);
+//   $('#sidebar-select-theme').on('change',updateTheme);
+
+
+$('#sidebar-select-theme').on("click", () => {
+    // if default value is changed
+    $('#sidebar-select-theme').on("change", () => {
+      // if value switched by client
+      $('.sidebar-content').html('');  
+      displayStatsCanHeadlines(indicators_en,'.sidebar-content');
+
+      });
+    });
+
+ $('#sidebar-select-region').on("click", () => {
+        // if default value is changed
+        $('#sidebar-select-region').on("change", () => {
+          // if value switched by client
+          $('.sidebar-content').html('');  
+          displayStatsCanHeadlines(indicators_en,'.sidebar-content');
+          
+          });
+        });
+
+  function init() {
+    $('#sidebar-select-region').val('Canada');
+    $('#sidebar-select-theme').val('Employment and unemployment');
+    fetchStatsCanHeadlines();
+  }
+
+  init();
