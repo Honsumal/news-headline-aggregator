@@ -127,38 +127,38 @@ function displayNews(APInews) {
     }
     for (i=0;i<APInews.articles.length;i++) {
         // Outer shell
-        let newsOuterContainer = document.createElement("div");
-        newsOuterContainer.classList.add("card", "col", "s12");
+        let newsOuterContainer = document.createElement("div"); // Create div for article card
+        newsOuterContainer.classList.add("card", "col", "s12"); // Add styling classes for Materialize
         // Inner Shell
-        let newsBody = document.createElement("div");
+        let newsBody = document.createElement("div"); 
         newsBody.classList.add("card-content");
         //Headline
-        let headline = document.createElement("a");
-        headline.setAttribute("target","_blank");
+        let headline = document.createElement("a"); // Create element for title link
+        headline.setAttribute("target","_blank"); // Ensure opening link opens a new tab
         headline.classList.add("headline-link", "black-text"); // Styling for headline links
-        headline.setAttribute("href",APInews.articles[i].link);
-        let headlineText = document.createElement("h5");
-        headlineText.classList.add("black-text")
-        headlineText.textContent=(APInews.articles[i].title);
-        headline.append(headlineText);
+        headline.setAttribute("href",APInews.articles[i].link); // Turn headline title into a link
+        let headlineText = document.createElement("h5"); // Create element for title
+        headlineText.classList.add("black-text") // Override link styling for title
+        headlineText.textContent=(APInews.articles[i].title); // Populate title content
+        headline.append(headlineText); 
         newsBody.append(headline);
         //Source
-        let source = document.createElement("h6");
-        source.textContent = (APInews.articles[i].clean_url);
+        let source = document.createElement("h6"); // Create header element for source
+        source.textContent = (APInews.articles[i].clean_url); // Populate source text
         newsBody.append(source);
         //Text
-        let textPreview = document.createElement("p");
-        textPreview.textContent = (APInews.articles[i].summary);
+        let textPreview = document.createElement("p"); // Create paragraph element for summary
+        textPreview.textContent = (APInews.articles[i].summary); // Populate summary text
         newsBody.append(textPreview);
         //Readmore
-        let readMore = document.createElement("a");
-        readMore.setAttribute("target","_blank");
-        readMore.textContent = ("Read more here!");
-        readMore.setAttribute("href",APInews.articles[i].link);
+        let readMore = document.createElement("a"); // Create read more link element
+        readMore.setAttribute("target","_blank"); // Open link in new tabs
+        readMore.textContent = ("Read more here!"); // Text
+        readMore.setAttribute("href",APInews.articles[i].link); // Set up link target
         newsBody.append(readMore)
         // Add element to news headlines
-        newsOuterContainer.append(newsBody);
-        newsList.append(newsOuterContainer);
+        newsOuterContainer.append(newsBody); // Add content to outer div
+        newsList.append(newsOuterContainer); // Add card to articles list
     }
 }
 
