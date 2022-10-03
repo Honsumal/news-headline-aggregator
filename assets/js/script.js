@@ -3,15 +3,43 @@ let themesStatsCan_En = []; // English themes array
 let indicators_en = [];
 let searchquery;
 
+let sHistory = []
+
+function init (){
+    let storedHistory = JSON.parse(localStorage.getItem('searchHistory'))
+
+    console.log(storedHistory)
+
+    if (storedHistory !== null)
+        sHistory = storedHistory
+
+    console.log(sHistory)
+
+    showSearchHistory()
+}
+
+init()
 
 let theme = {
         theme_id: 0,
         label: ""
 };
 
+// Saves queries to local storage
+function saveQuery (query){
+    sHistory.unshift(query)
+    sHistory.splice(5)
+    localStorage.setItem("searchHistory", JSON.stringify(sHistory))
+}
 
+//functionality for showing seach history
+function showSearchHistory () {
+    let sHistoryList = document.getElementById("sHistoryList")
 
-
+    sHistoryList.innerHTML = sHistory
+    .map(i => `<li>${i}</li>`)
+    .join('');
+};
 
 extractStatsCanThemes("housing");
 fetchStatsCanHeadlines("money");
@@ -21,7 +49,9 @@ let search = $("#searchForm");
 function thingy(e) {
     e.preventDefault();
     searchquery = $("#search").val();
-    getNews(searchquery)
+    getNews(searchquery);
+    saveQuery(searchquery);
+    showSearchHistory();
 }
 
 search.on("submit", thingy)
@@ -161,7 +191,8 @@ $('#aSearchButton').on('click', function(event){
     let aQuery = query.query + "+" + query.gArea + "+" + query.theme
 
     getNews(aQuery)
-
+    saveQuery(aQuery)
+    showSearchHistory()
 });
 
 function parseStatsCanIndicators(data) {
