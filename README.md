@@ -41,7 +41,7 @@ WHEN I enter a basic search query
 THEN I am presented with news headlines along with a summary of content preview
 WHEN I click on the news source
 THEN the original news source is displayed on another browser tab/window
-WHEN I look at the side navbar 
+WHEN I search for StatsCan news by region and theme
 THEN there is a list of StatsCan key economic indicators displayed for a specific region and theme
 WHEN I select a different region or theme from the dropdown boxes
 THEN the indicators are updated as per the new selections
@@ -56,7 +56,7 @@ THEN news headlines search will include the search query as well as the region a
 
 APIs:
 
-1. free-news.p.rapidapi.com
+1. free-news.p.rapidapi.com (limited to only 21 calls/hour)
 2. statcan-economic-indicators-statcan-apicast-production.api.canada.ca
 
 Third-party libraries & CSS Frameworks:
