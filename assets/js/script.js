@@ -1,6 +1,6 @@
 let regionsStatsCan_En = []; // English regions array
 let themesStatsCan_En = []; // English themes array
-let indicators_en = [];
+let indicators_en = []; // stores StatsCan data payload
 let searchquery;
 let search = $("#searchForm");
 
@@ -40,7 +40,7 @@ $('#aSearchButton').on('click', function(event){
         theme: $('#theme').val()
     };
 
-
+    // a submit in Advanced Search form passes on the dropdown contents to the dropdowns in the side navbar and re-displays the indicators
     $('#sidebar-select-region').val($('#gArea').val());
     $('#sidebar-select-theme').val($('#theme').val());
     $('.sidebar-content').html('');
@@ -119,9 +119,6 @@ function displayNews(APInews) {
     }
 }
 
-extractStatsCanThemes("housing");
-fetchStatsCanHeadlines("money");
-
 // Provides functionality to search bar
 function thingy(e) {
     e.preventDefault();
@@ -177,14 +174,15 @@ function fetchStatsCanHeadlines() {
                 }
                 themesStatsCan_En=data.results.themes_en; // extract the themes array 
 
-                parseStatsCanIndicators(data);
-                displayStatsCanHeadlines(indicators_en,'.sidebar-content');
+                parseStatsCanIndicators(data); //parses the JSON file to extract payload to indicators_en array
+                displayStatsCanHeadlines(indicators_en,'.sidebar-content'); //refresh the displayed indicators
 
 
               })
               .catch(console.error)
 }
 
+// extract the fetched JSON data into an object and populate to an array
 function parseStatsCanIndicators(data) {
     let indicators = data.results.indicators;
 
@@ -226,8 +224,6 @@ function parseStatsCanIndicators(data) {
         indicators_en.push(indicator);
     });
 
-    // console.log(indicators_en);
-
 }
 
 // displays the StatsCan information based on input region/theme criteria to be obtained form user search UI at top of page
@@ -243,13 +239,7 @@ function displayStatsCanHeadlines(dataArr,displayElement) {
 
     indicators.forEach(elem => {
 
-            // console.log('Elements themes:',elem.themes);
-            // console.log('Elements region:',elem.region);
-            // console.log('Selected themes:',selectTheme);
-            // console.log('Selected region:',selectRegion);
-            
-            // console.log('Region match:',elem.region===selectRegion);
-            // console.log('Theme match:',elem.themes.includes(selectTheme));
+        // get the dropdown values from the side navbar and only display data if it meets the filtering criteria
 
         if (elem.region===selectRegion && elem.themes.includes(selectTheme)) {
             let $colDiv = $('<div>').addClass("col s12 m1").attr('style',"padding: 0 10px 0 10px;");
@@ -297,12 +287,14 @@ function displayStatsCanHeadlines(dataArr,displayElement) {
 
 }
 
+// function tied to the even listener for Region dropdown change in the sidebar
 function updateRegion(e) {
     e.preventDefault();
     $('.sidebar-content').html('');
     displayStatsCanHeadlines(indicators_en,'.sidebar-content');
 }
 
+// function tied to the even listener for Theme dropdown change in the sidebar
 function updateTheme(e) {
     e.preventDefault();
     $('.sidebar-content').html('');
@@ -322,16 +314,14 @@ $(document).ready(function(){
 $('.modal').modal();
 });
 
+// Materialize CSS sidenav bar initialization
 $(document).ready(function(){
     $('.sidenav').sidenav();
   });
 
 
 
-//   $('#sidebar-form').on('change',updateRegion);
-//   $('#sidebar-select-theme').on('change',updateTheme);
-
-
+// sidenav dropdown list change listeners for Region and Theme which re-display the indicators post change event
 $('#sidebar-select-theme').on("click", () => {
     // if default value is changed
     $('#sidebar-select-theme').on("change", () => {
@@ -352,10 +342,13 @@ $('#sidebar-select-theme').on("click", () => {
           });
         });
 
+// function initializes the StatsCan and newsearch api on page load        
 function init() {
     $('#sidebar-select-region').val('Canada');
     $('#sidebar-select-theme').val('Employment and unemployment');
     fetchStatsCanHeadlines();
+    getNews('business news')
+
 }
 
 init();
