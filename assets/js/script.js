@@ -8,10 +8,10 @@ let search = $("#searchForm");
 let sHistory = []
 let storedHistory = JSON.parse(localStorage.getItem('searchHistory'))
 
-if (storedHistory !== null)
+if (storedHistory !== null) {
     sHistory = storedHistory
+}
 
-sHistory = storedHistory
 showSearchHistory()
 
 // Saves queries to local storage
