@@ -2,7 +2,7 @@
 
 ## Description
 
-Develop an interactive news headline aggregator web applicaiton where the user can search for and select topics and aggregate news headlines across multiple news sources as per the requirements stated in the User Story.
+Develop an interactive news headline aggregator web application where the user can search for and select topics and aggregate news headlines across multiple news sources as per the requirements stated in the User Story.
 
 The initial development and enhancements will be divided across multiple phase MVPs.
 
